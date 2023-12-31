@@ -1,0 +1,32 @@
+name: ChessChaos.Domain Tests (.NET 7, Ubuntu Latest)
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./src
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install .NET 7
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Restore projects
+      run: dotnet restore
+      working-directory: ${{env.working-directory}}
+
+    - name: Build projects
+      run: dotnet build --no-restore
+      working-directory: ${{env.working-directory}}
+        
+    - name: Execute unit tests
+      run: dotnet test --no-build --no-restore
+      working-directory: ${{env.working-directory}}
