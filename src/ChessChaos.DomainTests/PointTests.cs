@@ -146,6 +146,106 @@ public class PointTests
 		isPointsAreNotEqual.Should().BeTrue();
 	}
 
+	[TestMethod]
+	public void WhenOffsetTwoPoints_AndOffsetCountPointsCorrect_ThenPointsPositionWillBeChanged()
+	{
+		// Arrange.
+		const int x = 2;
+		const int y = 3;
+		const int offsetX = 6;
+		const int offsetY = 9;
+
+		var point = new Point(x, y);
+
+		var offset = point.Offset(offsetX, offsetY);
+
+		// Act.
+		var isPointsWillBeOffset = offset != point;
+
+		// Assert.
+		isPointsWillBeOffset.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenOffsetTwoPoints_AndOffsetPointsAre0_ThenPositionsDontChanged()
+	{
+		// Arrange.
+		const int x = 15;
+		const int y = 12;
+		const int offsetX = 0;
+		const int offsetY = 0;
+
+		var point = new Point(x, y);
+
+		var offset = point.Offset(offsetX, offsetY);
+
+		// Act.
+		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+
+		// Assert.
+		isPointsWillBeOffset.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenOffsetTwoPoints_AndOffsetArePointNotZero_ThenPositionWillBeChanged()
+	{
+		// Arrange.
+		const int x = 6;
+		const int y = 2;
+		const int offsetX = 2;
+		const int offsetY = 5;
+
+		var point = new Point(x, y);
+
+		var offset = point.Offset(offsetX, offsetY);
+
+		// Act.
+		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+
+		// Assert.
+		isPointsWillBeOffset.Should().BeFalse();
+	}
+
+	[TestMethod]
+	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPositionNotChanged()
+	{
+		// Arrange.
+		const int x = 5;
+		const int y = 7;
+		const int offsetX = 0;
+		const int offsetY = 0;
+
+		var point = new Point(x, y);
+
+		var offset = point.Offset(new Point(offsetX,offsetY));
+
+		// Act.
+		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+
+		// Assert.
+		isPointsWillBeOffset.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPositionWillBeChanged()
+	{
+		// Arrange.
+		const int x = 5;
+		const int y = 7;
+		const int offsetX = 2;
+		const int offsetY = 4;
+
+		var point = new Point(x, y);
+
+		var offset = point.Offset(new Point(offsetX, offsetY));
+
+		// Act.
+		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+
+		// Assert.
+		isPointsWillBeOffset.Should().BeFalse();
+	}
+
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
 	{
 		const int x = 45;
