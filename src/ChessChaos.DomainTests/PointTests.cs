@@ -147,7 +147,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetTwoPoints_AndOffsetCountPointsCorrect_ThenPointsPositionWillBeChanged()
+	public void WhenOffsetTwoPoints_AndOffsetCountPointsCorrect_ThenPointsPointWillBeChanged()
 	{
 		// Arrange.
 		const int x = 2;
@@ -160,14 +160,14 @@ public class PointTests
 		var offset = point.Offset(offsetX, offsetY);
 
 		// Act.
-		var isPointsWillBeOffset = offset != point;
+		var isPointsWillBeOffset = offset != point && (offset.X == 8 && offset.Y == 12);
 
 		// Assert.
 		isPointsWillBeOffset.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenOffsetTwoPoints_AndOffsetPointsAre0_ThenPositionsDontChanged()
+	public void WhenOffsetTwoPoints_AndOffsetPointsAre0_ThenPointDontChanged()
 	{
 		// Arrange.
 		const int x = 15;
@@ -180,14 +180,14 @@ public class PointTests
 		var offset = point.Offset(offsetX, offsetY);
 
 		// Act.
-		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+		var isPointsWillBeOffset = point.X == offset.X && point.Y == offset.Y;
 
 		// Assert.
 		isPointsWillBeOffset.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenOffsetTwoPoints_AndOffsetArePointNotZero_ThenPositionWillBeChanged()
+	public void WhenOffsetTwoPoints_AndOffsetArePointNotZero_ThenPointWillBeChanged()
 	{
 		// Arrange.
 		const int x = 6;
@@ -207,7 +207,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPositionNotChanged()
+	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPointNotChanged()
 	{
 		// Arrange.
 		const int x = 5;
@@ -227,7 +227,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPositionWillBeChanged()
+	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPointWillBeChanged()
 	{
 		// Arrange.
 		const int x = 5;
