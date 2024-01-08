@@ -28,11 +28,11 @@ public readonly struct Point
 	public static bool operator !=(Point p1, Point p2)
 		=> !(p1 == p2);
 
-	public Point Offset(int dx, int dy)
+	public Point Offset(int dX, int dY)
 	{
-		return new Point(X + dx, Y + dy);
+		return new Point(X + dX, Y + dY);
 	}
 
-	public Point Offset(Point offset) 
+	public Point Offset(Point offset)
 		=> Offset(offset.X, offset.Y);
 }
