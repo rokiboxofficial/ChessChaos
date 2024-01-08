@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using ChessChaos.Domain.Timers;
+using FluentAssertions;
 
 namespace ChessChaos.DomainTests.ChessTimerTests;
 
@@ -126,5 +127,20 @@ public class ChessTimerIntervalTimerTests
 
 		// Assert.
 		enabled.Should().BeFalse();
+	}
+
+	[TestMethod]
+	public void WhenElaspsingIntervalTimer_AndChessTimerIsRunning_ThenChessTimerElapsedShouldBeRaise()
+	{
+		// Arrange.
+		var (chessTimer, intervalTimer, intervalTimerMock) = Utils.GetChessTimerAndIntervalTimerAndMock(initialTimeInMilliseconds: Utils.MillisecondsInSecond);
+		using var monitoredChessTimer = chessTimer.Monitor();
+		chessTimer.Start();
+
+		// Act.
+		intervalTimerMock.Raise(intervalTimer => intervalTimer.Elapsed += null);
+
+		// Assert.
+		monitoredChessTimer.Should().Raise(nameof(ChessTimer.Elapsed));
 	}
 }

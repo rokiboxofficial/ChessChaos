@@ -14,6 +14,9 @@ public static class Utils
 	public static (ChessTimer, IIntervalTimer) GetChessTimerAndIntervalTimer(int initialTimeInMilliseconds)
 		=> GetChessTimerAndIntervalTimer(() => DateTime.MinValue, initialTimeInMilliseconds);
 
+	public static (ChessTimer chessTimer, IIntervalTimer intervalTimer, Mock<IIntervalTimer> intervalTimerMock) GetChessTimerAndIntervalTimerAndMock(int initialTimeInMilliseconds)
+		=> GetChessTimerAndIntervalTimerAndMock(() => DateTime.MinValue, initialTimeInMilliseconds);
+
 	public static ChessTimer GetChessTimer(Func<DateTime> fakeDateTimeProvider, int initialTimeInMilliseconds)
 	{
 		var (chessTimer, _) = GetChessTimerAndIntervalTimer(fakeDateTimeProvider, initialTimeInMilliseconds);
@@ -23,14 +26,21 @@ public static class Utils
 
 	public static (ChessTimer chessTimer, IIntervalTimer intervalTimer) GetChessTimerAndIntervalTimer(Func<DateTime> fakeDateTimeProvider, int initialTimeInMilliseconds)
 	{
-		var dateTimeProvider = GetMockDateTimeNowProvider(fakeDateTimeProvider);
-		var intervalTimer = GetMockIntervalTimer();
-		var chessTimer = new ChessTimer(intervalTimer, dateTimeProvider, initialTimeInMilliseconds);
+		var (chessTimer, intervalTimer, _) = GetChessTimerAndIntervalTimerAndMock(fakeDateTimeProvider, initialTimeInMilliseconds);
 
 		return (chessTimer, intervalTimer);
 	}
 
-	private static IDateTimeNowProvider GetMockDateTimeNowProvider(Func<DateTime> fakeDateTimeProvider)
+	public static (ChessTimer chessTimer, IIntervalTimer intervalTimer, Mock<IIntervalTimer> intervalTimerMock) GetChessTimerAndIntervalTimerAndMock(Func<DateTime> fakeDateTimeProvider, int initialTimeInMilliseconds)
+	{
+		var dateTimeProvider = GetDateTimeNowProvider(fakeDateTimeProvider);
+		var (intervalTimer, intervalTimerMock) = GetIntervalTimerAndIntervalTimerMock();
+		var chessTimer = new ChessTimer(intervalTimer, dateTimeProvider, initialTimeInMilliseconds);
+
+		return (chessTimer, intervalTimer, intervalTimerMock);
+	}
+
+	private static IDateTimeNowProvider GetDateTimeNowProvider(Func<DateTime> fakeDateTimeProvider)
 	{
 		var dateTimeNowProviderMock = new Mock<IDateTimeNowProvider>();
 		dateTimeNowProviderMock
@@ -42,7 +52,7 @@ public static class Utils
 		return dateTimeProvider;
 	}
 
-	private static IIntervalTimer GetMockIntervalTimer()
+	private static (IIntervalTimer intervalTimer, Mock<IIntervalTimer> intervalTimerMock) GetIntervalTimerAndIntervalTimerMock()
 	{
 		var enabled = false;
 		var intervalTimerMock = new Mock<IIntervalTimer>();
@@ -52,6 +62,6 @@ public static class Utils
 		intervalTimerMock.SetupGet(intervalTimer => intervalTimer.Enabled).Returns(() => enabled);
 		var intervalTimer = intervalTimerMock.Object;
 
-		return intervalTimer;
+		return (intervalTimer, intervalTimerMock);
 	}
 }

@@ -21,6 +21,7 @@ public sealed class ChessTimer : IChessTimer
 		_intervalTimer = intervalTimer;
 		_dateTimeNowProvider = dateTimeNowProvider;
 		TimeLeftInMilliseconds = initialTimeInMilliseconds;
+		_intervalTimer.Elapsed += () => Elapsed?.Invoke();
 	}
 
 	public int TimeLeftInMilliseconds { get; private set; }
