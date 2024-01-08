@@ -147,100 +147,79 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetTwoPoints_AndOffsetCountPointsCorrect_ThenPointsPointWillBeChanged()
+	public void WhenOffsetingTwoPoints_AndOffsetPointCorrect_ThenPointsPointShouldBeChanged()
 	{
 		// Arrange.
-		const int x = 2;
-		const int y = 3;
-		const int offsetX = 6;
-		const int offsetY = 9;
+		var point = new Point(2, 3);
 
-		var point = new Point(x, y);
-
-		var offset = point.Offset(offsetX, offsetY);
+		var offset = point.Offset(6, 9);
 
 		// Act.
-		var isPointsWillBeOffset = offset != point && (offset.X == 8 && offset.Y == 12);
+		var isPointChanged = offset != point && (offset.X == 8 && offset.Y == 12);
 
 		// Assert.
-		isPointsWillBeOffset.Should().BeTrue();
+		isPointChanged.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenOffsetTwoPoints_AndOffsetPointsAre0_ThenPointDontChanged()
+	public void WhenOffsetingTwoPoints_AndOffsetEquals0_ThenPointShouldBeNotChanged()
 	{
 		// Arrange.
-		const int x = 15;
-		const int y = 12;
-		const int offsetX = 0;
-		const int offsetY = 0;
+		var point = new Point(15, 12);
 
-		var point = new Point(x, y);
-
-		var offset = point.Offset(offsetX, offsetY);
+		var offset = point.Offset(0, 0);
 
 		// Act.
-		var isPointsWillBeOffset = point.X == offset.X && point.Y == offset.Y;
+		var isPointChanged = point.X.Equals(offset.X) && point.Y.Equals(offset.Y);
 
 		// Assert.
-		isPointsWillBeOffset.Should().BeTrue();
+		isPointChanged.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenOffsetTwoPoints_AndOffsetArePointNotZero_ThenPointWillBeChanged()
+	public void WhenOffsetingTwoPoints_AndOffsetPointsIsNotZero_ThenPointShouldBeChanged()
 	{
 		// Arrange.
-		const int x = 6;
-		const int y = 2;
-		const int offsetX = 2;
-		const int offsetY = 5;
+		var point = new Point(6, 2);
 
-		var point = new Point(x, y);
-
-		var offset = point.Offset(offsetX, offsetY);
+		var offset = point.Offset(2, 5);
 
 		// Act.
-		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+		var isPointChanged = point.X.Equals(offset.X) && point.Y.Equals(offset.Y);
 
 		// Assert.
-		isPointsWillBeOffset.Should().BeFalse();
+		isPointChanged.Should().BeFalse();
 	}
 
 	[TestMethod]
-	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPointNotChanged()
+	public void WhenOffsetingPoint_AndPointCordsIsNotZero_ThenPointShouldBeNotChanged()
 	{
 		// Arrange.
-		const int x = 5;
-		const int y = 7;
-		const int offsetX = 0;
-		const int offsetY = 0;
+		var point = new Point(5, 7);
 
-		var point = new Point(x, y);
+		var offset = point.Offset(0, 0);
 
-		var offset = point.Offset(new Point(offsetX,offsetY));
+		var offsetedPoint = point.Offset(offset);
 
 		// Act.
-		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+		var isPointChanged = point.X.Equals(offsetedPoint.X) && point.Y.Equals(offsetedPoint.Y);
 
 		// Assert.
-		isPointsWillBeOffset.Should().BeTrue();
+		isPointChanged.Should().BeFalse();
 	}
 
 	[TestMethod]
-	public void WhenOffsetPoint_AndPointCordsNotZero_ThenPointWillBeChanged()
+	public void WhenOffsetingPoint_AndPointsXAndYNotZero_ThenPointShouldBeChanged()
 	{
 		// Arrange.
-		const int x = 5;
-		const int y = 7;
-		const int offsetX = 2;
-		const int offsetY = 4;
+		var point = new Point(5, 7);
 
-		var point = new Point(x, y);
+		var offset = new Point(2, 4);
 
-		var offset = point.Offset(new Point(offsetX, offsetY));
+		var offsetPoint = point.Offset(offset);
 
 		// Act.
-		var isPointsWillBeOffset = point.X == offset.X && point.Y == point.Y;
+		var isPointsWillBeOffset = point.X.Equals(offsetPoint.X) && point.Y.Equals(offsetPoint.Y);
 
 		// Assert.
 		isPointsWillBeOffset.Should().BeFalse();
