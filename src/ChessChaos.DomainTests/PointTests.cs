@@ -146,6 +146,101 @@ public class PointTests
 		isPointsAreNotEqual.Should().BeTrue();
 	}
 
+	[TestMethod]
+	public void WhenOffsetingPoint_AndOffsetEquals0_ThenOffsetedPointShouldBeNotChanged()
+	{
+		// Arrange.
+		var point = new Point(15, 12);
+
+		var offsetedPoint = point.Offset(0, 0);
+
+		// Act.
+		var isPointChanged = point == offsetedPoint;
+
+		// Assert.
+		isPointChanged.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenOffsetingPoint_AndOffsetPointsIsNotZero_ThenOffsetedPointShouldBeChanged()
+	{
+		// Arrange.
+		var point = new Point(6, 2);
+
+		var offsetedPoint = point.Offset(2, 5);
+
+		// Act.
+		var isPointChanged = point == offsetedPoint;
+
+		// Assert.
+		isPointChanged.Should().BeFalse();
+	}
+
+	[TestMethod]
+	public void WhenOffsetingPoint_AndOffsetXAndYAreNegative_ThenOffsetedPointShouldBeChanged()
+	{
+		// Arrange.
+		var point = new Point(5, 5);
+
+		var offsetedPoint = point.Offset(-2, -2);
+
+		// Act.
+		var isPointChanged = point == offsetedPoint;
+
+		// Assert.
+		isPointChanged.Should().BeFalse();
+	}
+
+	[TestMethod]
+	public void WhenOffsetingPoint_AndOffsetXAndYAreCorrected_ThenInitialPointNotChanged()
+	{
+		// Arrange.
+		var initialPoint = new Point(2, 3);
+
+		initialPoint.Offset(2, 4);
+
+		// Act.
+		var isPointChanged = initialPoint == new Point(2, 3);
+
+		// Assert.
+		isPointChanged.Should().BeTrue();
+	}
+
+
+	[TestMethod]
+	public void WhenOffsettingPointByDeltaXAndDeltaY_AndPointXAndYAreNotZero_ThenOffsetedPointShouldBeNotChanged()
+	{
+		// Arrange.
+		var point = new Point(5, 7);
+
+		var offset = point.Offset(0, 0);
+
+		var offsetedPoint = point.Offset(offset);
+
+		// Act.
+		var isPointChanged = point == offsetedPoint;
+
+		// Assert.
+		isPointChanged.Should().BeFalse();
+	}
+
+	[TestMethod]
+	public void WhenOffsetingPoint_AndPointsXAndYAreNotZero_ThenOffsetedPointShouldBeChanged()
+	{
+		// Arrange.
+		var point = new Point(5, 7);
+
+		var offset = new Point(2, 4);
+
+		var offsetPoint = point.Offset(offset);
+
+		// Act.
+		var isPointChanged = point == offsetPoint;
+
+		// Assert.
+		isPointChanged.Should().BeFalse();
+	}
+
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
 	{
 		const int x = 45;
