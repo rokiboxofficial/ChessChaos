@@ -147,30 +147,15 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetCorrected_ThenOffsetedPointShouldBeChanged()
-	{
-		// Arrange.
-		var point = new Point(2, 3);
-
-		var offset = point.Offset(6, 9);
-
-		// Act.
-		var isPointChanged = offset == new Point(8, 12);
-
-		// Assert.
-		isPointChanged.Should().BeTrue();
-	}
-
-	[TestMethod]
 	public void WhenOffsetingPoint_AndOffsetEquals0_ThenOffsetedPointShouldBeNotChanged()
 	{
 		// Arrange.
 		var point = new Point(15, 12);
 
-		var offset = point.Offset(0, 0);
+		var offsetedPoint = point.Offset(0, 0);
 
 		// Act.
-		var isPointChanged = point == offset;
+		var isPointChanged = point == offsetedPoint;
 
 		// Assert.
 		isPointChanged.Should().BeTrue();
@@ -182,40 +167,40 @@ public class PointTests
 		// Arrange.
 		var point = new Point(6, 2);
 
-		var offset = point.Offset(2, 5);
+		var offsetedPoint = point.Offset(2, 5);
 
 		// Act.
-		var isPointChanged = point == offset;
+		var isPointChanged = point == offsetedPoint;
 
 		// Assert.
 		isPointChanged.Should().BeFalse();
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetСoordinatesXOrYIsNegative_ThenOffsetedPointShouldBeChanged()
+	public void WhenOffsetingPoint_AndOffsetXAndYAreNegative_ThenOffsetedPointShouldBeChanged()
 	{
 		// Arrange.
 		var point = new Point(5, 5);
 
-		var offset = point.Offset(-2, -2);
+		var offsetedPoint = point.Offset(-2, -2);
 
 		// Act.
-		var isPointChanged = point == offset;
+		var isPointChanged = point == offsetedPoint;
 
 		// Assert.
 		isPointChanged.Should().BeFalse();
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetСoordinatesCorrected_ThenCurrentPointDoesntChangedValue()
+	public void WhenOffsetingPoint_AndOffsetXAndYAreCorrected_ThenInitialPointNotChanged()
 	{
 		// Arrange.
-		var point = new Point(2, 3);
+		var initialPoint = new Point(2, 3);
 
-		var offset = point.Offset(3, 4);
+		initialPoint.Offset(2, 4);
 
 		// Act.
-		var isPointChanged = point != offset;
+		var isPointChanged = initialPoint == new Point(2, 3);
 
 		// Assert.
 		isPointChanged.Should().BeTrue();
@@ -223,7 +208,7 @@ public class PointTests
 
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndPointXAndYAreNotZero_ThenOffsetedPointShouldBeNotChanged()
+	public void WhenOffsettingPointByDeltaXAndDeltaY_AndPointXAndYAreNotZero_ThenOffsetedPointShouldBeNotChanged()
 	{
 		// Arrange.
 		var point = new Point(5, 7);
