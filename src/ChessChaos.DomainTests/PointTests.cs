@@ -206,41 +206,6 @@ public class PointTests
 		isPointChanged.Should().BeTrue();
 	}
 
-
-	[TestMethod]
-	public void WhenOffsettingPointByDeltaXAndDeltaY_AndPointXAndYAreNotZero_ThenOffsetedPointShouldBeNotChanged()
-	{
-		// Arrange.
-		var point = new Point(5, 7);
-
-		var offset = point.Offset(0, 0);
-
-		var offsetedPoint = point.Offset(offset);
-
-		// Act.
-		var isPointChanged = point == offsetedPoint;
-
-		// Assert.
-		isPointChanged.Should().BeFalse();
-	}
-
-	[TestMethod]
-	public void WhenOffsetingPoint_AndPointsXAndYAreNotZero_ThenOffsetedPointShouldBeChanged()
-	{
-		// Arrange.
-		var point = new Point(5, 7);
-
-		var offset = new Point(2, 4);
-
-		var offsetPoint = point.Offset(offset);
-
-		// Act.
-		var isPointChanged = point == offsetPoint;
-
-		// Assert.
-		isPointChanged.Should().BeFalse();
-	}
-
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
 	{
 		const int x = 45;

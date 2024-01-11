@@ -32,7 +32,4 @@ public readonly struct Point
 	{
 		return new Point(X + dx, Y + dy);
 	}
-
-	public Point Offset(Point offset)
-		=> Offset(offset.X, offset.Y);
 }
