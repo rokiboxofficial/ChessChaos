@@ -29,7 +29,5 @@ public readonly struct Point
 		=> !(p1 == p2);
 
 	public Point Offset(int dx, int dy)
-	{
-		return new Point(X + dx, Y + dy);
-	}
+		=> new Point(X + dx, Y + dy);
 }
