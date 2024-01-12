@@ -152,7 +152,9 @@ public class PointTests
 		// Arrange.
 		var point = new Point(15, 12);
 
-		var offsetedPoint = point.Offset(0, 0);
+		var offset = new Point(0, 0);
+
+		var offsetedPoint = point.Offset(offset);
 
 		// Act.
 		var isPointChanged = point == offsetedPoint;
@@ -167,7 +169,9 @@ public class PointTests
 		// Arrange.
 		var point = new Point(6, 2);
 
-		var offsetedPoint = point.Offset(2, 5);
+		var offset = new Point(2, 5);
+
+		var offsetedPoint = point.Offset(offset);
 
 		// Act.
 		var isPointChanged = point == offsetedPoint;
@@ -182,7 +186,9 @@ public class PointTests
 		// Arrange.
 		var point = new Point(5, 5);
 
-		var offsetedPoint = point.Offset(-2, -2);
+		var offset = new Point(-2, -2);
+
+		var offsetedPoint = point.Offset(offset);
 
 		// Act.
 		var isPointChanged = point == offsetedPoint;
@@ -197,7 +203,9 @@ public class PointTests
 		// Arrange.
 		var initialPoint = new Point(2, 3);
 
-		initialPoint.Offset(2, 4);
+		var offset = new Point(2, 4);
+
+		initialPoint.Offset(offset);
 
 		// Act.
 		var isPointChanged = initialPoint == new Point(2, 3);
