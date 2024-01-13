@@ -147,34 +147,34 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetEquals0_ThenOffsetedPointShouldBeNotChanged()
+	public void WhenOffsetingPoint_AndOffsetEquals0_ThenOffsetedPointShouldBeEqualToInitialPoint()
 	{
 		// Arrange.
-		var point = new Point(15, 12);
+		var initialPoint = new Point(15, 12);
 
 		var offset = new Point(0, 0);
 
-		var offsetedPoint = point.Offset(offset);
+		var offsetedPoint = initialPoint.Offset(offset);
 
 		// Act.
-		var isPointChanged = point == offsetedPoint;
+		var isPointChanged = initialPoint == offsetedPoint;
 
 		// Assert.
 		isPointChanged.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetPointsIsNotZero_ThenOffsetedPointShouldBeChanged()
+	public void WhenOffsetingPoint_AndOffsetPointIsNot0_ThenOffsetedPointShouldBeChanged()
 	{
 		// Arrange.
-		var point = new Point(6, 2);
+		var initialPoint = new Point(6, 2);
 
 		var offset = new Point(2, 5);
 
-		var offsetedPoint = point.Offset(offset);
+		var offsetedPoint = initialPoint.Offset(offset);
 
 		// Act.
-		var isPointChanged = point == offsetedPoint;
+		var isPointChanged = initialPoint == offsetedPoint && (offsetedPoint.X == 8 && offsetedPoint.Y == 7);
 
 		// Assert.
 		isPointChanged.Should().BeFalse();
@@ -184,21 +184,21 @@ public class PointTests
 	public void WhenOffsetingPoint_AndOffsetXAndYAreNegative_ThenOffsetedPointShouldBeChanged()
 	{
 		// Arrange.
-		var point = new Point(5, 5);
+		var initialPoint = new Point(5, 5);
 
 		var offset = new Point(-2, -2);
 
-		var offsetedPoint = point.Offset(offset);
+		var offsetedPoint = initialPoint.Offset(offset);
 
 		// Act.
-		var isPointChanged = point == offsetedPoint;
+		var isPointChanged = initialPoint == offsetedPoint && (offsetedPoint.X == 3 && offsetedPoint.Y == 3);
 
 		// Assert.
 		isPointChanged.Should().BeFalse();
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetXAndYAreCorrected_ThenInitialPointNotChanged()
+	public void WhenOffsetingPoint_AndOffsetPointIsNot_ThenInitialPointNotChanged()
 	{
 		// Arrange.
 		var initialPoint = new Point(2, 3);
