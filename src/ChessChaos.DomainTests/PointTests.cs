@@ -174,10 +174,10 @@ public class PointTests
 		var offsetedPoint = initialPoint.Offset(offset);
 
 		// Act.
-		var isPointChanged = initialPoint == offsetedPoint && (offsetedPoint.X == 8 && offsetedPoint.Y == 7);
+		var isPointChanged = offsetedPoint.X == 8 && offsetedPoint.Y == 7;
 
 		// Assert.
-		isPointChanged.Should().BeFalse();
+		isPointChanged.Should().BeTrue();
 	}
 
 	[TestMethod]
@@ -186,19 +186,19 @@ public class PointTests
 		// Arrange.
 		var initialPoint = new Point(5, 5);
 
-		var offset = new Point(-2, -2);
+		var offset = new Point(-2, -3);
 
 		var offsetedPoint = initialPoint.Offset(offset);
 
 		// Act.
-		var isPointChanged = initialPoint == offsetedPoint && (offsetedPoint.X == 3 && offsetedPoint.Y == 3);
+		var isPointChanged = offsetedPoint.X == 3 && offsetedPoint.Y == 2;
 
 		// Assert.
-		isPointChanged.Should().BeFalse();
+		isPointChanged.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetPointIsNot_ThenInitialPointNotChanged()
+	public void WhenOffsetingPoint_AndOffsetPointIsNot0_ThenInitialPointNotChanged()
 	{
 		// Arrange.
 		var initialPoint = new Point(2, 3);
