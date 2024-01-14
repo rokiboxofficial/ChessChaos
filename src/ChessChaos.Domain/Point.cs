@@ -27,4 +27,7 @@ public readonly struct Point
 
 	public static bool operator !=(Point p1, Point p2)
 		=> !(p1 == p2);
+
+	public Point Offset(Point offset)
+		=> new Point(offset.X + X, offset.Y + Y);
 }
