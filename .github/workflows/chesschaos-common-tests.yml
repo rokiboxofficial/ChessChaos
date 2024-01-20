@@ -30,12 +30,12 @@ jobs:
     
     - name: Restore ChessChaos.CommonTests
       run: dotnet restore
-      working-directory: ${{common-tests-working-directory}}
+      working-directory: ${{env.common-tests-working-directory}}
 
     - name: Build ChessChaos.CommonTests
       run: dotnet build --no-restore
-      working-directory: ${{common-tests-working-directory}}
+      working-directory: ${{env.common-tests-working-directory}}
 
     - name: Run tests for ChessChaos.CommonTests
       run: dotnet test --no-build --no-restore
-      working-directory: ${{common-tests-working-directory}}
+      working-directory: ${{env.common-tests-working-directory}}
