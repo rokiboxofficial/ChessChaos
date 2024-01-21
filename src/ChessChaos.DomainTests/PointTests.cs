@@ -160,7 +160,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndPontsAreNegative_ThenPointXShouldBeIsNegative3AndPointYShouldBeIsNegative7()
+	public void WhenSubtracting_AndPontsAreNegative_ThenPointXShouldBeIsNegative3AndPointYShouldBeIsNegative7()
 	{
 		// Arrange.
 		var firstPoint = new Point(-7, -9);
@@ -174,7 +174,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperatorr_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
+	public void WhenSubtracting_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
 	{
 		// Arrange.
 		var firstPoint = new Point(7, -9);
@@ -188,7 +188,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndPontsAre0_ThenPointXShouldBe0AndPointYShouldBe0()
+	public void WhenSubtracting_AndPontsAre0_ThenPointXShouldBe0AndPointYShouldBe0()
 	{
 		// Arrange.
 		var firstPoint = new Point(0, 0);
