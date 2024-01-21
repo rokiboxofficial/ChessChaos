@@ -147,87 +147,58 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndPontsAreTheSame_ThenPointShouldBeSubtract()
+	public void WhenSubtracting_AndPontsAreTheSame_ThenPointXShouldBe0AndPointYShouldBe0()
 	{
 		// Arrange.
 		var (firstPoint, secondPoint) = GetSamePoints();
 
 		// Act.
-		var isPointsSubtract = firstPoint - secondPoint == new Point(0, 0);
+		var result = firstPoint - secondPoint;
 
-		// Assert.
-		isPointsSubtract.Should().BeTrue();
-	}
-
-
-	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndPontsAreNot0_ThenPointShouldBeSubtract()
-	{
-		// Arrange.
-		var firstPoint = new Point(6, 8);
-		var secondPoint = new Point(4, 2);
-
-		// Act.
-		var isPointsSubtract = firstPoint - secondPoint == new Point(2, 6);
-
-		// Assert.
-		isPointsSubtract.Should().BeTrue();
+		// Assert.s
+		result.Should().Be(new Point(0, 0));
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndPontsAreNegative_ThenPointShouldBeSubtract()
+	public void WhenSubtractingBySubtractOperator_AndPontsAreNegative_ThenPointXShouldBeIsNegative3AndPointYShouldBeIsNegative7()
 	{
 		// Arrange.
 		var firstPoint = new Point(-7, -9);
 		var secondPoint = new Point(-4, -2);
 
 		// Act.
-		var isPointsSubtract = firstPoint - secondPoint == new Point(-3, -7);
+		var result = firstPoint - secondPoint;
 
 		// Assert.
-		isPointsSubtract.Should().BeTrue();
+		result.Should().Be(new Point(-3, -7));
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndSomePontsAreNegativeOrPositive_ThenPointShouldBeSubtract()
+	public void WhenSubtractingBySubtractOperator_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
 	{
 		// Arrange.
 		var firstPoint = new Point(7, -9);
 		var secondPoint = new Point(-5, 2);
 
 		// Act.
-		var isPointsSubtract = firstPoint - secondPoint == new Point(12, -11);
+		var result = firstPoint - secondPoint;
 
 		// Assert.
-		isPointsSubtract.Should().BeTrue();
+		result.Should().Be(new Point(12, -11));
 	}
 
 	[TestMethod]
-	public void WhenSubtractingBySubtractOperator_AndSomePontsArePositiveOrNegative_ThenPointShouldBeSubtract()
-	{
-		// Arrange.
-		var firstPoint = new Point(-7, 1);
-		var secondPoint = new Point(6, -5);
-
-		// Act.
-		var isPointsSubtract = firstPoint - secondPoint == new Point(-13, 6);
-
-		// Assert.
-		isPointsSubtract.Should().BeTrue();
-	}
-
-	[TestMethod]
-	public void WhenSubtractingBySubstractionOperator_AndPontsAre0_ThenPointShouldBeSubstract()
+	public void WhenSubtractingBySubstractionOperator_AndPontsAre0_ThenPointXShouldBe0AndPointYShouldBe0()
 	{
 		// Arrange.
 		var firstPoint = new Point(0, 0);
 		var secondPoint = new Point(0, 0);
 
 		// Act.
-		var isPointsSubtract = firstPoint - secondPoint == new Point(0, 0);
+		var result = firstPoint - secondPoint;
 
 		// Assert.
-		isPointsSubtract.Should().BeTrue();
+		result.Should().Be(new Point(0, 0));
 	}
 
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
