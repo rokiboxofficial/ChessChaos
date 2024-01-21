@@ -1,7 +1,7 @@
-﻿using ChessChaos.Domain;
+﻿using ChessChaos.Common;
 using FluentAssertions;
 
-namespace ChessChaos.DomainTests;
+namespace ChessChaos.CommonTests;
 
 [TestClass]
 public class PointTests
