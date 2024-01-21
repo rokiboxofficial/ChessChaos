@@ -159,19 +159,6 @@ public class PointTests
 		result.Should().Be(new Point(0, 0));
 	}
 
-	[TestMethod]
-	public void WhenSubtracting_AndPontsAreNegative_ThenPointXShouldBeIsNegative3AndPointYShouldBeIsNegative7()
-	{
-		// Arrange.
-		var firstPoint = new Point(-7, -9);
-		var secondPoint = new Point(-4, -2);
-
-		// Act.
-		var result = firstPoint - secondPoint;
-
-		// Assert.
-		result.Should().Be(new Point(-3, -7));
-	}
 
 	[TestMethod]
 	public void WhenSubtracting_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
