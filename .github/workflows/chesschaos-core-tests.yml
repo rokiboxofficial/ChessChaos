@@ -1,4 +1,4 @@
-name: ChessChaos.Domain Tests (.NET 7, Ubuntu Latest)
+name: ChessChaos.Core Tests (.NET 7, Ubuntu Latest)
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      domain-tests-working-directory: ./src/ChessChaos.DomainTests
+      core-tests-working-directory: ./src/ChessChaos.CoreTests
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -21,12 +21,12 @@ jobs:
 
     - name: Restore ChessChaos.DomainTests
       run: dotnet restore
-      working-directory: ${{env.domain-tests-working-directory}}
+      working-directory: ${{env.core-tests-working-directory}}
 
     - name: Build ChessChaos.DomainTests
       run: dotnet build --no-restore
-      working-directory: ${{env.domain-tests-working-directory}}
+      working-directory: ${{env.core-tests-working-directory}}
 
     - name: Run tests for ChessChaos.DomainTests
       run: dotnet test --no-build --no-restore
-      working-directory: ${{env.domain-tests-working-directory}}
+      working-directory: ${{env.core-tests-working-directory}}
