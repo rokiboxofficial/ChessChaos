@@ -153,7 +153,7 @@ public class PointTests
 		var (firstPoint, secondPoint) = GetSamePoints();
 
 		// Act.
-		var isPointsSubtract = (firstPoint.X - secondPoint.X) == 0 && (firstPoint.Y - secondPoint.Y) == 0;
+		var isPointsSubtract = firstPoint - secondPoint == new Point(0, 0);
 
 		// Assert.
 		isPointsSubtract.Should().BeTrue();
@@ -168,7 +168,49 @@ public class PointTests
 		var secondPoint = new Point(4, 2);
 
 		// Act.
-		var isPointsSubtract = (firstPoint.X - secondPoint.X) == 2 && (firstPoint.Y - secondPoint.Y) == 6;
+		var isPointsSubtract = firstPoint - secondPoint == new Point(2, 6);
+
+		// Assert.
+		isPointsSubtract.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenSubtractingBySubtractOperator_AndPontsAreNegative_ThenPointShouldBeSubtract()
+	{
+		// Arrange.
+		var firstPoint = new Point(-7, -9);
+		var secondPoint = new Point(-4, -2);
+
+		// Act.
+		var isPointsSubtract = firstPoint - secondPoint == new Point(-3, -7);
+
+		// Assert.
+		isPointsSubtract.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenSubtractingBySubtractOperator_AndSomePontsAreNegativeOrPositive_ThenPointShouldBeSubtract()
+	{
+		// Arrange.
+		var firstPoint = new Point(7, -9);
+		var secondPoint = new Point(-5, 2);
+
+		// Act.
+		var isPointsSubtract = firstPoint - secondPoint == new Point(12, -11);
+
+		// Assert.
+		isPointsSubtract.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenSubtractingBySubtractOperator_AndSomePontsArePositiveOrNegative_ThenPointShouldBeSubtract()
+	{
+		// Arrange.
+		var firstPoint = new Point(-7, 1);
+		var secondPoint = new Point(6, -5);
+
+		// Act.
+		var isPointsSubtract = firstPoint - secondPoint == new Point(-13, 6);
 
 		// Assert.
 		isPointsSubtract.Should().BeTrue();
@@ -182,7 +224,7 @@ public class PointTests
 		var secondPoint = new Point(0, 0);
 
 		// Act.
-		var isPointsSubtract = (firstPoint.X - secondPoint.X) == 0 && (firstPoint.Y - secondPoint.Y) == 0;
+		var isPointsSubtract = firstPoint - secondPoint == new Point(0, 0);
 
 		// Assert.
 		isPointsSubtract.Should().BeTrue();
