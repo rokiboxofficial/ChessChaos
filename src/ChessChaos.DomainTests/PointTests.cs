@@ -146,6 +146,48 @@ public class PointTests
 		isPointsAreNotEqual.Should().BeTrue();
 	}
 
+	[TestMethod]
+	public void WhenSubtractingBySubtractOperator_AndPontsAreTheSame_ThenPointShouldBeSubtract()
+	{
+		// Arrange.
+		var (firstPoint, secondPoint) = GetSamePoints();
+
+		// Act.
+		var isPointsSubtract = (firstPoint.X - secondPoint.X) == 0 && (firstPoint.Y - secondPoint.Y) == 0;
+
+		// Assert.
+		isPointsSubtract.Should().BeTrue();
+	}
+
+
+	[TestMethod]
+	public void WhenSubtractingBySubtractOperator_AndPontsAreNot0_ThenPointShouldBeSubtract()
+	{
+		// Arrange.
+		var firstPoint = new Point(6, 8);
+		var secondPoint = new Point(4, 2);
+
+		// Act.
+		var isPointsSubtract = (firstPoint.X - secondPoint.X) == 2 && (firstPoint.Y - secondPoint.Y) == 6;
+
+		// Assert.
+		isPointsSubtract.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenSubtractingBySubstractionOperator_AndPontsAre0_ThenPointShouldBeSubstract()
+	{
+		// Arrange.
+		var firstPoint = new Point(0, 0);
+		var secondPoint = new Point(0, 0);
+
+		// Act.
+		var isPointsSubtract = (firstPoint.X - secondPoint.X) == 0 && (firstPoint.Y - secondPoint.Y) == 0;
+
+		// Assert.
+		isPointsSubtract.Should().BeTrue();
+	}
+
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
 	{
 		const int x = 45;
