@@ -14,20 +14,23 @@ public readonly struct Point
 	public int Y { get; }
 
 	public override int GetHashCode()
-		=> HashCode.Combine(X, Y);
+	  => HashCode.Combine(X, Y);
 
 	public override bool Equals([NotNullWhen(true)] object? obj)
-		=> obj is Point && Equals((Point)obj);
+	  => obj is Point && Equals((Point)obj);
 
 	public bool Equals(Point other)
-		=> this == other;
+	  => this == other;
 
 	public static bool operator ==(Point p1, Point p2)
-		=> p1.X == p2.X && p1.Y == p2.Y;
+	  => p1.X == p2.X && p1.Y == p2.Y;
 
 	public static bool operator !=(Point p1, Point p2)
-		=> !(p1 == p2);
+	  => !(p1 == p2);
 
 	public Point Offset(Point offset)
-		=> new Point(offset.X + X, offset.Y + Y);
+	  => new Point(offset.X + X, offset.Y + Y);
+
+	public static Point operator -(Point p1, Point p2)
+	  => new Point(p1.X - p2.X, p1.Y - p2.Y);
 }
