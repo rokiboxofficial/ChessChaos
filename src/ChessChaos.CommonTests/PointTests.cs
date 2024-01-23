@@ -147,71 +147,45 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetEquals0_ThenOffsetedPointShouldBeEqualToInitialPoint()
+	public void WhenSubtracting_AndPontsAreTheSame_ThenPointXShouldBe0AndPointYShouldBe0()
 	{
 		// Arrange.
-		var initialPoint = new Point(15, 12);
-
-		var offset = new Point(0, 0);
-
-		var offsetedPoint = initialPoint.Offset(offset);
+		var (firstPoint, secondPoint) = GetSamePoints();
 
 		// Act.
-		var isPointChanged = initialPoint == offsetedPoint;
+		var result = firstPoint - secondPoint;
+
+		// Assert.s
+		result.Should().Be(new Point(0, 0));
+	}
+
+
+	[TestMethod]
+	public void WhenSubtracting_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
+	{
+		// Arrange.
+		var firstPoint = new Point(7, -9);
+		var secondPoint = new Point(-5, 2);
+
+		// Act.
+		var result = firstPoint - secondPoint;
 
 		// Assert.
-		isPointChanged.Should().BeTrue();
+		result.Should().Be(new Point(12, -11));
 	}
 
 	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetPointIsNot0_ThenOffsetedPointShouldBeChanged()
+	public void WhenSubtracting_AndPontsAre0_ThenPointXShouldBe0AndPointYShouldBe0()
 	{
 		// Arrange.
-		var initialPoint = new Point(6, 2);
-
-		var offset = new Point(2, 5);
-
-		var offsetedPoint = initialPoint.Offset(offset);
+		var firstPoint = new Point(0, 0);
+		var secondPoint = new Point(0, 0);
 
 		// Act.
-		var isPointChanged = offsetedPoint.X == 8 && offsetedPoint.Y == 7;
+		var result = firstPoint - secondPoint;
 
 		// Assert.
-		isPointChanged.Should().BeTrue();
-	}
-
-	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetXAndYAreNegative_ThenOffsetedPointShouldBeChanged()
-	{
-		// Arrange.
-		var initialPoint = new Point(5, 5);
-
-		var offset = new Point(-2, -3);
-
-		var offsetedPoint = initialPoint.Offset(offset);
-
-		// Act.
-		var isPointChanged = offsetedPoint.X == 3 && offsetedPoint.Y == 2;
-
-		// Assert.
-		isPointChanged.Should().BeTrue();
-	}
-
-	[TestMethod]
-	public void WhenOffsetingPoint_AndOffsetPointIsNot0_ThenInitialPointNotChanged()
-	{
-		// Arrange.
-		var initialPoint = new Point(2, 3);
-
-		var offset = new Point(2, 4);
-
-		initialPoint.Offset(offset);
-
-		// Act.
-		var isPointChanged = initialPoint == new Point(2, 3);
-
-		// Assert.
-		isPointChanged.Should().BeTrue();
+		result.Should().Be(new Point(0, 0));
 	}
 
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
