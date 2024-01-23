@@ -3,17 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessChaos.Domain", "ChessChaos.Domain\ChessChaos.Domain.csproj", "{F0F5A2EC-A345-48A2-B60B-D924885BA845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessChaos.Domain", "ChessChaos.Domain\ChessChaos.Domain.csproj", "{F0F5A2EC-A345-48A2-B60B-D924885BA845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessChaos.DomainTests", "ChessChaos.DomainTests\ChessChaos.DomainTests.csproj", "{72F548FF-4B08-4730-95CB-079F6B8C2E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessChaos.DomainTests", "ChessChaos.DomainTests\ChessChaos.DomainTests.csproj", "{72F548FF-4B08-4730-95CB-079F6B8C2E40}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessChaos.Common", "ChessChaos.Common\ChessChaos.Common.csproj", "{CD7E50B9-A744-43D3-BC1F-18EFFAB8ABDC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessChaos.CommonTests", "ChessChaos.CommonTests\ChessChaos.CommonTests.csproj", "{7814D315-76F1-439C-96A7-E04D6C63A718}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessChaos.Core", "ChessChaos.Core\ChessChaos.Core.csproj", "{61332414-1EC0-4A08-A7FD-1F8817D77C27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessChaos.CoreTests", "ChessChaos.CoreTests\ChessChaos.CoreTests.csproj", "{D7224053-D961-4912-8FC9-E0B9DEE8D4EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F0F5A2EC-A345-48A2-B60B-D924885BA845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +29,27 @@ Global
 		{72F548FF-4B08-4730-95CB-079F6B8C2E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72F548FF-4B08-4730-95CB-079F6B8C2E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72F548FF-4B08-4730-95CB-079F6B8C2E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD7E50B9-A744-43D3-BC1F-18EFFAB8ABDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7E50B9-A744-43D3-BC1F-18EFFAB8ABDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7E50B9-A744-43D3-BC1F-18EFFAB8ABDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7E50B9-A744-43D3-BC1F-18EFFAB8ABDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7814D315-76F1-439C-96A7-E04D6C63A718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7814D315-76F1-439C-96A7-E04D6C63A718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7814D315-76F1-439C-96A7-E04D6C63A718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7814D315-76F1-439C-96A7-E04D6C63A718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61332414-1EC0-4A08-A7FD-1F8817D77C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61332414-1EC0-4A08-A7FD-1F8817D77C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61332414-1EC0-4A08-A7FD-1F8817D77C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61332414-1EC0-4A08-A7FD-1F8817D77C27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7224053-D961-4912-8FC9-E0B9DEE8D4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7224053-D961-4912-8FC9-E0B9DEE8D4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7224053-D961-4912-8FC9-E0B9DEE8D4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7224053-D961-4912-8FC9-E0B9DEE8D4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC373DF5-1BCE-4419-8A88-07A722B7BCC7}
 	EndGlobalSection
 EndGlobal
