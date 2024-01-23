@@ -165,13 +165,13 @@ public class PointTests
 	{
 		// Arrange.
 		var firstPoint = new Point(7, -9);
-		var secondPoint = new Point(-5, 2);
+		var secondPoint = new Point(-5, 4);
 
 		// Act.
 		var result = firstPoint - secondPoint;
 
 		// Assert.
-		result.Should().Be(new Point(12, -11));
+		result.Should().Be(new Point(12, -13));
 	}
 
 	[TestMethod]
