@@ -33,4 +33,19 @@ public readonly struct Point
 
 	public static Point operator -(Point p1, Point p2)
 		=> new Point(p1.X - p2.X, p1.Y - p2.Y);
+
+	public Point GetDirection(Point source, Point target)
+	{
+		var resultPoint = new Point();
+		try
+		{
+			resultPoint = new Point((source.X - target.X) / Math.Abs(source.X - target.X), (source.Y - target.Y) / Math.Abs(source.Y - target.Y));
+		}
+		catch
+		{
+			resultPoint = new Point(0, 0);
+		}
+
+		return resultPoint;
+	}
 }
