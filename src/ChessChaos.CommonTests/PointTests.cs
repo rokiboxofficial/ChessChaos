@@ -309,7 +309,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXNegative8AndTargetPointYNegative6_ThenDirectionCoordinatesXNegative1AndYPositive1()//-8,0,0,-6
+	public void WhenDirectingPoints_AndSourcePointXNegative8AndTargetPointYNegative6_ThenDirectionCoordinatesXNegative1AndYPositive1()
 	{
 		// Arange.
 		var source = new Point(-8, 0);
@@ -324,7 +324,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXPositive8AndTargetPointYNegative6_ThenDirectionCoordinatesXPositive1AndYPointPositive1()//8,0,0,6
+	public void WhenDirectingPoints_AndSourcePointXPositive8AndTargetPointYNegative6_ThenDirectionCoordinatesXPositive1AndYPointPositive1()
 	{
 		// Arange.
 		var source = new Point(8, 0);
@@ -339,7 +339,7 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXNegative6AndTargetPointYPositive8_ThenDirectionCoordinatesXNegative1AndYPointNegative1()//-6,0,0,8
+	public void WhenDirectingPoints_AndSourcePointXNegative6AndTargetPointYPositive8_ThenDirectionCoordinatesXNegative1AndYPointNegative1()
 	{
 		// Arange.
 		var source = new Point(-6, 0);
