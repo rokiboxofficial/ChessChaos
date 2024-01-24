@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChessChaos.Domain\ChessChaos.Domain.csproj" />
+    <ProjectReference Include="..\ChessChaos.Common\ChessChaos.Common.csproj" />
   </ItemGroup>
 
 </Project>
