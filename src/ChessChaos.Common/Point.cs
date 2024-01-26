@@ -36,16 +36,37 @@ public readonly struct Point
 
 	public Point GetDirection(Point source, Point target)
 	{
+		var validVector = ValidationVectors(source, target);
 		var resultPoint = new Point();
-		try
+
+		if (validVector)
 		{
-			resultPoint = new Point((source.X - target.X) / Math.Abs(source.X - target.X), (source.Y - target.Y) / Math.Abs(source.Y - target.Y));
+			resultPoint = new Point((source.X - target.X) / Math.Abs(source.X - target.X),
+							(source.Y - target.Y) / Math.Abs(source.Y - target.Y));
 		}
-		catch
+
+		else
 		{
-			resultPoint = new Point(0, 0);
+			throw new ArgumentException();
 		}
 
 		return resultPoint;
+	}
+
+	private bool ValidationVectors(Point source, Point target)
+	{
+		if (Math.Abs(source.X) == Math.Abs(source.Y)
+			&& Math.Abs(target.X) == Math.Abs(target.Y))
+		{
+			double x = (double)source.X / target.X;
+			double y = (double)source.Y / target.Y;
+
+			if (x == y)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

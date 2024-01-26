@@ -227,7 +227,6 @@ public class PointTests
 		result.Should().Be(new Point(0, 0));
 	}
 
-
 	[TestMethod]
 	public void WhenSubtracting_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
 	{
@@ -257,26 +256,50 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoint_AndPointsSourceAndTargetAre0_ThenPointDirectionShouldBeNotChanged()
+	public void WhenDirectingPoint_AndPointsSourceAndTargetAre0_ThenThrowArgumentException()
 	{
 		// Arange.
 		var source = new Point(0, 0);
 		var target = new Point(0, 0);
 		var resultPoint = new Point();
+		bool exception = false;
 
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		try
+		{ resultPoint.GetDirection(source, target); }
+
+		catch
+		{ exception = true; }
 
 		// Assert.
-		resultPoint.Should().Be(new Point(0, 0));
+		exception.Should().BeTrue();
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointBiggerThanTargetPoint_ThenDirectionShouldBePositive()
+	public void WhenDirectingPoint_AndVectorsIsNotValid_ThenThrowArgumentException()
+	{
+		// Arrange.
+		var source = new Point(1, 2);
+		var target = new Point(0, 0);
+		var resultPoint = new Point();
+		var exception = false;
+
+		// Act.
+		try
+		{ resultPoint.GetDirection(source, target); }
+		catch
+		{ exception = true; }
+
+		// Assert.
+		exception.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoint_AndSourceXYBiggerThanTargetXY_ThenDirectionXShouldBe1AndYShouldBe1()
 	{
 		// Arange.
-		var source = new Point(3, 9);
-		var target = new Point(2, 7);
+		var source = new Point(4, 4);
+		var target = new Point(-5, -5);
 		var resultPoint = new Point();
 
 		// Act.
@@ -287,11 +310,11 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndTargetPointBiggerThanSourcePoint_ThenDirectionCoordinatesShouldBeNegativeX1AndNegativeY1()
+	public void WhenDirectingPoint_AndSourceXYSmallerThanTargetXY_ThenDirectionXShouldBeNegative1AndYShouldBeNegative1()
 	{
 		// Arange.
-		var source = new Point(5, 7);
-		var target = new Point(8, 12);
+		var source = new Point(-5, -5);
+		var target = new Point(6, 6);
 		var resultPoint = new Point();
 
 		// Act.
@@ -302,26 +325,26 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointEqualsTargetPoint_ThenDirectionShouldBe0()
+	public void WhenDirectingPoint_AndSourceXAreNegative5AndY5_AndTargetXAreNegative8AndY8_ThenDirectionXShouldBe1AndYShouldBeNegative1()
 	{
 		// Arange.
-		var source = new Point(3, 9);
-		var target = new Point(3, 9);
+		var source = new Point(-5, 5);
+		var target = new Point(-8, 8);
 		var resultPoint = new Point();
 
 		// Act.
 		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
-		resultPoint.Should().Be(new Point(0, 0));
+		resultPoint.Should().Be(new Point(1, -1));
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointY5AndTargetPointX4_ThenDirectionCoordinatesEqualsNegative1AndPositive1()
+	public void WhenDirectingPoint_AndSourceXAre3AndYAreNegative3_AndTargetXAre7AndYAreNegative7_ThenDirectionXShouldBeNegative1AndYShouldBe1()
 	{
 		// Arange.
-		var source = new Point(0, 5);
-		var target = new Point(4, 0);
+		var source = new Point(3, -3);
+		var target = new Point(7, -7);
 		var resultPoint = new Point();
 
 		// Act.
@@ -329,96 +352,6 @@ public class PointTests
 
 		// Assert.
 		resultPoint.Should().Be(new Point(-1, 1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointYNegative4AndTargetPointXNegative5_ThenDirectionCoordinatesXPositive1AndNegative1()
-	{
-		// Arange.
-		var source = new Point(3, -4);
-		var target = new Point(-5, 0);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(1, -1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointYPositive4AndTargetPointXNegative5_ThenDirectionCoordinatesXPositive1AndYPositive1()
-	{
-		// Arange.
-		var source = new Point(0, 4);
-		var target = new Point(-5, 0);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(1, 1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXPositive8AndTargetPointYPositive6_ThenDirectionCoordinatesXPositive1AndYNegative1()
-	{
-		// Arange.
-		var source = new Point(8, 0);
-		var target = new Point(0, 6);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(1, -1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXNegative8AndTargetPointYNegative6_ThenDirectionCoordinatesXNegative1AndYPositive1()
-	{
-		// Arange.
-		var source = new Point(-8, 0);
-		var target = new Point(0, -6);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(-1, 1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXPositive8AndTargetPointYNegative6_ThenDirectionCoordinatesXPositive1AndYPointPositive1()
-	{
-		// Arange.
-		var source = new Point(8, 0);
-		var target = new Point(0, 6);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(1, -1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndSourcePointXNegative6AndTargetPointYPositive8_ThenDirectionCoordinatesXNegative1AndYPointNegative1()
-	{
-		// Arange.
-		var source = new Point(-6, 0);
-		var target = new Point(0, 8);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(-1, -1));
 	}
 
 	private static (Point firstPoint, Point secondPoint) GetSamePoints()
