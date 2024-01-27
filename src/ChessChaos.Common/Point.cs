@@ -34,39 +34,62 @@ public readonly struct Point
 	public static Point operator -(Point p1, Point p2)
 	  => new Point(p1.X - p2.X, p1.Y - p2.Y);
 
-	public Point GetDirection(Point source, Point target)
+	public Point GetNormalizationVectors(Point from, Point to)
 	{
-		var validVector = ValidationVectors(source, target);
-		var resultPoint = new Point();
+		GetValidatingVectors(from, to);
 
-		if (validVector)
+		var calcTo = to.X + to.Y;
+		var calcFrom = from.X + from.Y;
+
+		if (calcFrom != 0 && calcTo != 0)
 		{
-			resultPoint = new Point((source.X - target.X) / Math.Abs(source.X - target.X),
-							(source.Y - target.Y) / Math.Abs(source.Y - target.Y));
+			return GetDioganalDirection(from, to);
 		}
 
-		else
+		return GetHorizontalOrVerticalDirection(calcFrom, calcTo);
+	}
+
+	public Point GetHorizontalOrVerticalDirection(int from, int to)
+	{
+		if (from != 0 && to == 0)
+		{
+			if (from < 0)
+			{
+				return new Point(from / from * -1, to);
+			}
+			return new Point(from / from, to);
+		}
+
+		else if (from == 0 && to != 0)
+		{
+			if (to < 0)
+			{
+				return new Point(from, to / to * -1);
+			}
+			return new Point(from, to / to);
+		}
+		throw new ArgumentException("EROR1");
+	}
+
+	public Point GetDioganalDirection(Point from, Point to)
+	{
+		try
+		{
+			return new Point((to.X - from.X) / Math.Abs(to.X - from.X),
+						(to.Y - from.Y) / Math.Abs(to.Y - from.Y));
+		}
+		catch
 		{
 			throw new ArgumentException();
 		}
-
-		return resultPoint;
 	}
 
-	private bool ValidationVectors(Point source, Point target)
+	private void GetValidatingVectors(Point source, Point target)
 	{
-		if (Math.Abs(source.X) == Math.Abs(source.Y)
-			&& Math.Abs(target.X) == Math.Abs(target.Y))
+		if ((Math.Abs(source.X) == Math.Abs(source.Y)
+			&& Math.Abs(target.X) == Math.Abs(target.Y)))
 		{
-			double x = (double)source.X / target.X;
-			double y = (double)source.Y / target.Y;
-
-			if (x == y)
-			{
-				return true;
-			}
+			throw new ArgumentException("EROR2");
 		}
-
-		return false;
 	}
 }

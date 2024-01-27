@@ -256,99 +256,210 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoint_AndPointsSourceAndTargetAre0_ThenThrowArgumentException()
+	public void WhenDirectingPoints_AndPointsSourceAndTargetAre0_ThenThrowArgumentException()
 	{
 		// Arange.
 		var source = new Point(0, 0);
 		var target = new Point(0, 0);
-		var resultPoint = new Point();
-		bool exception = false;
+		var resultPoint = new Point(0, 0);
 
 		// Act.
-		try
-		{ resultPoint.GetDirection(source, target); }
-
-		catch
-		{ exception = true; }
+		Action act = () => resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
-		exception.Should().BeTrue();
+		act.Should().Throw<ArgumentException>();
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoint_AndVectorsIsNotValid_ThenThrowArgumentException()
-	{
-		// Arrange.
-		var source = new Point(1, 2);
-		var target = new Point(0, 0);
-		var resultPoint = new Point();
-		var exception = false;
-
-		// Act.
-		try
-		{ resultPoint.GetDirection(source, target); }
-		catch
-		{ exception = true; }
-
-		// Assert.
-		exception.Should().BeTrue();
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoint_AndSourceXYBiggerThanTargetXY_ThenDirectionXShouldBe1AndYShouldBe1()
+	public void WhenDirectingPoints_AndPointsSourceAndTargetAreTheSame_ThenThrowArgumentException()
 	{
 		// Arange.
 		var source = new Point(4, 4);
-		var target = new Point(-5, -5);
+		var target = new Point(4, 4);
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		act.Should().Throw<ArgumentException>();
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointsTargetXEqualsSourceX_ThenThrowException()
+	{
+		// Arange.
+		var source = new Point(4, 0);
+		var target = new Point(4, 0);
+		var resultPoint = new Point();
+
+		// Act.
+		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		act.Should().Throw<ArgumentException>();
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointsTargetYEqualsSourceY_ThenThrowException()
+	{
+		// Arange.
+		var source = new Point(0, 7);
+		var target = new Point(0, 7);
+		var resultPoint = new Point();
+
+		// Act.
+		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		act.Should().Throw<ArgumentException>();
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointsTargetXEqualsSourceXAndTargetYNotEqualsSourceY_ThenThrowException()
+	{
+		// Arange.
+		var source = new Point(8, 7);
+		var target = new Point(8, 9);
+		var resultPoint = new Point();
+
+		// Act.
+		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		act.Should().Throw<ArgumentException>();
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointsTargetYEqualsSourceXAndTargetXNotEqualsSourceX_ThenThrowException()
+	{
+		// Arange.
+		var source = new Point(8, 3);
+		var target = new Point(4, 3);
+		var resultPoint = new Point();
+
+		// Act.
+		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		act.Should().Throw<ArgumentException>();
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointSourceX9Y0AndPointTargetX0Y0_ThenDirectionShouldBeHorizontalRight()
+	{
+		// Arange.
+		var source = new Point(9, 0);
+		var target = new Point(0, 0);
+		var resultPoint = new Point();
+
+		// Act.
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		resultPoint.Should().Be(new Point(1, 0));
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointSourceX0Y0AndPointTargetX4Y0_ThenDirectionShouldBeVerticalDown()
+	{
+		// Arange.
+		var source = new Point(0, 0);
+		var target = new Point(4, 0);
+		var resultPoint = new Point();
+
+		// Act.
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		resultPoint.Should().Be(new Point(0, 1));
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointSourceX0YNegative2AndPointTargetX0Y0_ThenDirectionShouldBeHorizontalLeft()
+	{
+		// Arange.
+		var source = new Point(0, -2);
+		var target = new Point(0, 0);
+		var resultPoint = new Point();
+
+		// Act.
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		resultPoint.Should().Be(new Point(-1, 0));
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointSourceX0YNegative2AndPointTargetX0Y0_ThenDirectionShouldBeVerticalUp()
+	{
+		// Arange.
+		var source = new Point(0, 0);
+		var target = new Point(-5, 0);
+		var resultPoint = new Point();
+
+		// Act.
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+
+		// Assert.
+		resultPoint.Should().Be(new Point(0, -1));
+	}
+
+	[TestMethod]
+	public void WhenDirectingPoints_AndPointSourceXNegative7YNegative4AndPointTargetX8Y2_ThenDirectionShouldBeDiagonalRightDown()
+	{
+		// Arange.
+		var source = new Point(-7, -4);
+		var target = new Point(8, 2);
+		var resultPoint = new Point();
+
+		// Act.
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(1, 1));
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoint_AndSourceXYSmallerThanTargetXY_ThenDirectionXShouldBeNegative1AndYShouldBeNegative1()
+	public void WhenDirectingPoints_AndPointSourceX8Y6AndPointTargetX3Y4_ThenDirectionShouldBeDiagonalLeftUp()
 	{
 		// Arange.
-		var source = new Point(-5, -5);
-		var target = new Point(6, 6);
+		var source = new Point(8, 6);
+		var target = new Point(3, 4);
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(-1, -1));
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoint_AndSourceXAreNegative5AndY5_AndTargetXAreNegative8AndY8_ThenDirectionXShouldBe1AndYShouldBeNegative1()
+	public void WhenDirectingPoints_AndPointSourceX2Y6AndPointTargetX3Y4_ThenDirectionShouldBeDiagonalRightUp()
 	{
 		// Arange.
-		var source = new Point(-5, 5);
-		var target = new Point(-8, 8);
+		var source = new Point(2, 6);
+		var target = new Point(3, 4);
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(1, -1));
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoint_AndSourceXAre3AndYAreNegative3_AndTargetXAre7AndYAreNegative7_ThenDirectionXShouldBeNegative1AndYShouldBe1()
+	public void WhenDirectingPoints_AndPointSourceX7Y1AndPointTargetX5Y2_ThenDirectionShouldBeDiagonalLeftDown()
 	{
 		// Arange.
-		var source = new Point(3, -3);
-		var target = new Point(7, -7);
+		var source = new Point(7, 1);
+		var target = new Point(5, 2);
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		resultPoint = resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(-1, 1));
