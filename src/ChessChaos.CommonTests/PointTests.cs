@@ -297,7 +297,7 @@ public class PointTests
 		Action act = () => resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
-		act.Should().Throw<ArgumentException>();
+		act.Should().Throw<DivideByZeroException>();
 	}
 
 	[TestMethod]
@@ -312,7 +312,7 @@ public class PointTests
 		Action act = () => resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
-		act.Should().Throw<ArgumentException>();
+		act.Should().Throw<DivideByZeroException>();
 	}
 
 	[TestMethod]
@@ -327,7 +327,7 @@ public class PointTests
 		Action act = () => resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
-		act.Should().Throw<ArgumentException>();
+		act.Should().Throw<DivideByZeroException>();
 	}
 
 	[TestMethod]
@@ -342,7 +342,7 @@ public class PointTests
 		Action act = () => resultPoint.GetNormalizationVectors(source, target);
 
 		// Assert.
-		act.Should().Throw<ArgumentException>();
+		act.Should().Throw<DivideByZeroException>();
 	}
 
 	[TestMethod]

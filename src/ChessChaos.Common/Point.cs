@@ -36,60 +36,50 @@ public readonly struct Point
 
 	public Point GetNormalizationVectors(Point from, Point to)
 	{
-		GetValidatingVectors(from, to);
+		ThrowIfNotValid(from, to);
 
-		var calcTo = to.X + to.Y;
-		var calcFrom = from.X + from.Y;
-
-		if (calcFrom != 0 && calcTo != 0)
+		if (from.X + from.Y != 0 && to.X + to.Y != 0)
 		{
-			return GetDioganalDirection(from, to);
+			return GetDiagonalDirection(from, to);
 		}
 
-		return GetHorizontalOrVerticalDirection(calcFrom, calcTo);
+		return GetHorizontalOrVerticalDirection(from, to);
 	}
 
-	public Point GetHorizontalOrVerticalDirection(int from, int to)
+	private Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		if (from != 0 && to == 0)
+		var sumXYFirstPoint = to.X + to.Y;
+		var sumXYSecondPoint = from.X + from.Y;
+
+		if (sumXYSecondPoint != 0 && sumXYFirstPoint == 0)
 		{
-			if (from < 0)
-			{
-				return new Point(from / from * -1, to);
-			}
-			return new Point(from / from, to);
+			return sumXYSecondPoint < 0
+				? new Point(sumXYSecondPoint / sumXYSecondPoint * -1, sumXYFirstPoint)
+				: new Point(sumXYSecondPoint / sumXYSecondPoint, sumXYFirstPoint);
 		}
 
-		else if (from == 0 && to != 0)
+		else if (sumXYSecondPoint == 0 && sumXYFirstPoint != 0)
 		{
-			if (to < 0)
-			{
-				return new Point(from, to / to * -1);
-			}
-			return new Point(from, to / to);
+			return sumXYFirstPoint < 0
+				? new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint * -1)
+				: new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint);
 		}
-		throw new ArgumentException("EROR1");
+
+		throw new ArgumentException("Invalid coordinates");
 	}
 
-	public Point GetDioganalDirection(Point from, Point to)
+	private Point GetDiagonalDirection(Point from, Point to)
 	{
-		try
-		{
-			return new Point((to.X - from.X) / Math.Abs(to.X - from.X),
-						(to.Y - from.Y) / Math.Abs(to.Y - from.Y));
-		}
-		catch
-		{
-			throw new ArgumentException();
-		}
+		return new Point((to.X - from.X) / Math.Abs(to.X - from.X),
+					(to.Y - from.Y) / Math.Abs(to.Y - from.Y));
 	}
 
-	private void GetValidatingVectors(Point source, Point target)
+	private void ThrowIfNotValid(Point source, Point target)
 	{
-		if ((Math.Abs(source.X) == Math.Abs(source.Y)
-			&& Math.Abs(target.X) == Math.Abs(target.Y)))
+		if (Math.Abs(source.X) == Math.Abs(source.Y)
+			&& Math.Abs(target.X) == Math.Abs(target.Y))
 		{
-			throw new ArgumentException("EROR2");
+			throw new ArgumentException("Inalid vector coordinates");
 		}
 	}
 }
