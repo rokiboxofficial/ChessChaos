@@ -15,7 +15,7 @@ public class DirectionHorizontalPointTests
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(-1, 0));
@@ -30,7 +30,7 @@ public class DirectionHorizontalPointTests
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(1, 0));

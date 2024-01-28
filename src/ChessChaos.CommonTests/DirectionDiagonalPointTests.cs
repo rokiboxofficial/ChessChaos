@@ -15,7 +15,7 @@ public class DirectionDiagonalPointTests
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(1, 1));
@@ -30,7 +30,7 @@ public class DirectionDiagonalPointTests
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(-1, -1));
@@ -45,7 +45,7 @@ public class DirectionDiagonalPointTests
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(1, -1));
@@ -60,7 +60,7 @@ public class DirectionDiagonalPointTests
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(-1, 1));

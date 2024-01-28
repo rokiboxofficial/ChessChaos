@@ -34,44 +34,53 @@ public readonly struct Point
 	public static Point operator -(Point p1, Point p2)
 	  => new Point(p1.X - p2.X, p1.Y - p2.Y);
 
-	public Point GetNormalizationVectors(Point from, Point to)
+	public Point GetDirection(Point from, Point to)
 	{
 		ThrowIfNotValid(from, to);
 
-		if (from.X + from.Y != 0 && to.X + to.Y != 0)
-		{
-			return GetDiagonalDirection(from, to);
-		}
-
-		return GetHorizontalOrVerticalDirection(from, to);
+		return IsDioganalDirection(GetSumSecondPoint(to), GetSumFirstPoint(from))
+			? GetDiagonalDirection(from, to)
+			: GetHorizontalOrVerticalDirection(from, to);
 	}
 
 	private Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		var sumXYFirstPoint = to.X + to.Y;
-		var sumXYSecondPoint = from.X + from.Y;
+		var sumXYFirstPoint = GetSumSecondPoint(to);
+		var sumXYSecondPoint = GetSumFirstPoint(from);
 
-		if (sumXYSecondPoint != 0 && sumXYFirstPoint == 0)
-		{
-			return sumXYSecondPoint < 0
+		return IsHorizontalDirection(sumXYFirstPoint, sumXYSecondPoint)
+			? GetHorizontalDirection(sumXYSecondPoint, sumXYFirstPoint)
+			: GetVerticalDirection(sumXYSecondPoint, sumXYFirstPoint);
+	}
+
+	private Point GetVerticalDirection(int sumXYSecondPoint, int sumXYFirstPoint)
+	{
+		return sumXYFirstPoint < 0
+			? new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint * -1)
+			: new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint);
+	}
+
+	private Point GetHorizontalDirection(int sumXYSecondPoint, int sumXYFirstPoint)
+	{
+		return sumXYSecondPoint < 0
 				? new Point(sumXYSecondPoint / sumXYSecondPoint * -1, sumXYFirstPoint)
 				: new Point(sumXYSecondPoint / sumXYSecondPoint, sumXYFirstPoint);
-		}
-
-		else if (sumXYSecondPoint == 0 && sumXYFirstPoint != 0)
-		{
-			return sumXYFirstPoint < 0
-				? new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint * -1)
-				: new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint);
-		}
-
-		throw new ArgumentException("Invalid coordinates");
 	}
 
 	private Point GetDiagonalDirection(Point from, Point to)
 	{
 		return new Point((to.X - from.X) / Math.Abs(to.X - from.X),
 					(to.Y - from.Y) / Math.Abs(to.Y - from.Y));
+	}
+
+	private int GetSumFirstPoint(Point from)
+	{
+		return from.X + from.Y;
+	}
+
+	private int GetSumSecondPoint(Point to)
+	{
+		return to.X + to.Y;
 	}
 
 	private void ThrowIfNotValid(Point source, Point target)
@@ -81,5 +90,15 @@ public readonly struct Point
 		{
 			throw new ArgumentException("Inalid vector coordinates");
 		}
+	}
+
+	private bool IsDioganalDirection(int first, int second)
+	{
+		return first != 0 && second != 0;
+	}
+
+	private bool IsHorizontalDirection(int first, int second)
+	{
+		return second != 0 && first == 0;
 	}
 }

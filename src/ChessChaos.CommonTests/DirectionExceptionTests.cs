@@ -16,7 +16,7 @@ public class DirectionExceptionTests
 		var resultPoint = new Point(0, 0);
 
 		// Act.
-		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+		Action act = () => resultPoint.GetDirection(source, target);
 
 		// Assert.
 		act.Should().Throw<ArgumentException>();
@@ -31,7 +31,7 @@ public class DirectionExceptionTests
 		var resultPoint = new Point();
 
 		// Act.
-		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+		Action act = () => resultPoint.GetDirection(source, target);
 
 		// Assert.
 		act.Should().Throw<ArgumentException>();
@@ -46,7 +46,7 @@ public class DirectionExceptionTests
 		var resultPoint = new Point();
 
 		// Act.
-		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+		Action act = () => resultPoint.GetDirection(source, target);
 
 		// Assert.
 		act.Should().Throw<DivideByZeroException>();
@@ -61,7 +61,7 @@ public class DirectionExceptionTests
 		var resultPoint = new Point();
 
 		// Act.
-		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+		Action act = () => resultPoint.GetDirection(source, target);
 
 		// Assert.
 		act.Should().Throw<DivideByZeroException>();
@@ -76,7 +76,7 @@ public class DirectionExceptionTests
 		var resultPoint = new Point();
 
 		// Act.
-		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+		Action act = () => resultPoint.GetDirection(source, target);
 
 		// Assert.
 		act.Should().Throw<DivideByZeroException>();
@@ -91,7 +91,7 @@ public class DirectionExceptionTests
 		var resultPoint = new Point();
 
 		// Act.
-		Action act = () => resultPoint.GetNormalizationVectors(source, target);
+		Action act = () => resultPoint.GetDirection(source, target);
 
 		// Assert.
 		act.Should().Throw<DivideByZeroException>();

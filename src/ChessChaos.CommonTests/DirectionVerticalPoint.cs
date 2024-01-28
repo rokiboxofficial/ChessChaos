@@ -15,7 +15,7 @@ internal class DirectionVerticalPoint
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(0, 1));
@@ -30,7 +30,7 @@ internal class DirectionVerticalPoint
 		var resultPoint = new Point();
 
 		// Act.
-		resultPoint = resultPoint.GetNormalizationVectors(source, target);
+		resultPoint = resultPoint.GetDirection(source, target);
 
 		// Assert.
 		resultPoint.Should().Be(new Point(0, -1));
