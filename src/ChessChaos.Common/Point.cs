@@ -38,7 +38,10 @@ public readonly struct Point
 	{
 		ThrowIfNotValid(from, to);
 
-		return IsDioganalDirection(GetSumSecondPoint(to), GetSumFirstPoint(from))
+		var sumFirtsPoint = GetSumFirstPoint(from);
+		var sumSecondPoint = GetSumSecondPoint(to);
+
+		return IsDioganalDirection(sumSecondPoint, sumFirtsPoint)
 			? GetDiagonalDirection(from, to)
 			: GetHorizontalOrVerticalDirection(from, to);
 	}
@@ -69,8 +72,9 @@ public readonly struct Point
 
 	private Point GetDiagonalDirection(Point from, Point to)
 	{
-		return new Point((to.X - from.X) / Math.Abs(to.X - from.X),
-					(to.Y - from.Y) / Math.Abs(to.Y - from.Y));
+		var x = to.X - from.X;
+		var y = to.Y - from.Y;
+		return new Point((x) / Math.Abs(x), (y) / Math.Abs(y));
 	}
 
 	private int GetSumFirstPoint(Point from)
@@ -90,8 +94,13 @@ public readonly struct Point
 		{
 			throw new ArgumentException("Inalid input");
 		}
-	}
 
+		if (Math.Abs(source.X) == Math.Abs(target.X)
+			&& Math.Abs(source.Y) == Math.Abs(target.Y))
+		{
+			throw new ArgumentException("Inalid input");
+		}
+	}
 	private bool IsDioganalDirection(int first, int second)
 	{
 		return first != 0 && second != 0;
