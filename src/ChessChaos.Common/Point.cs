@@ -88,7 +88,7 @@ public readonly struct Point
 		if (Math.Abs(source.X) == Math.Abs(source.Y)
 			&& Math.Abs(target.X) == Math.Abs(target.Y))
 		{
-			throw new ArgumentException("Inalid vector coordinates");
+			throw new ArgumentException("Inalid input");
 		}
 	}
 
