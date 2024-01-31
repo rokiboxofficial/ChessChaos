@@ -38,51 +38,52 @@ public readonly struct Point
 	{
 		ThrowIfNotValid(from, to);
 
-		var sumFirtsPoint = GetSumFirstPoint(from);
-		var sumSecondPoint = GetSumSecondPoint(to);
+		var firstPointDirection = YPointDirection(from);
+		var secondPointDirection = XPointDirection(to);
 
-		return IsDioganalDirection(sumSecondPoint, sumFirtsPoint)
+		return IsDiagonalDirection(secondPointDirection, firstPointDirection)
 			? GetDiagonalDirection(from, to)
 			: GetHorizontalOrVerticalDirection(from, to);
 	}
 
 	private Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		var sumXYFirstPoint = GetSumSecondPoint(to);
-		var sumXYSecondPoint = GetSumFirstPoint(from);
+		var firstPointDirection = XPointDirection(to);
+		var secondPointDirection = YPointDirection(from);
 
-		return IsHorizontalDirection(sumXYFirstPoint, sumXYSecondPoint)
-			? GetHorizontalDirection(sumXYSecondPoint, sumXYFirstPoint)
-			: GetVerticalDirection(sumXYSecondPoint, sumXYFirstPoint);
+		return IsHorizontalDirection(firstPointDirection, secondPointDirection)
+			? GetHorizontalDirection(secondPointDirection, firstPointDirection)
+			: GetVerticalDirection(secondPointDirection, firstPointDirection);
 	}
 
-	private Point GetVerticalDirection(int sumXYSecondPoint, int sumXYFirstPoint)
+	private Point GetVerticalDirection(int secondPointDirection, int firstPointDirection)
 	{
-		return sumXYFirstPoint < 0
-			? new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint * -1)
-			: new Point(sumXYSecondPoint, sumXYFirstPoint / sumXYFirstPoint);
+		return firstPointDirection < 0
+			? new Point(secondPointDirection, firstPointDirection / firstPointDirection * -1)
+			: new Point(secondPointDirection, firstPointDirection / firstPointDirection);
 	}
 
-	private Point GetHorizontalDirection(int sumXYSecondPoint, int sumXYFirstPoint)
+	private Point GetHorizontalDirection(int secondPointDirection, int firstPointDirection)
 	{
-		return sumXYSecondPoint < 0
-				? new Point(sumXYSecondPoint / sumXYSecondPoint * -1, sumXYFirstPoint)
-				: new Point(sumXYSecondPoint / sumXYSecondPoint, sumXYFirstPoint);
+		return secondPointDirection < 0
+			? new Point(secondPointDirection / secondPointDirection * -1, firstPointDirection)
+			: new Point(secondPointDirection / secondPointDirection, firstPointDirection);
 	}
 
 	private Point GetDiagonalDirection(Point from, Point to)
 	{
 		var x = to.X - from.X;
 		var y = to.Y - from.Y;
+
 		return new Point((x) / Math.Abs(x), (y) / Math.Abs(y));
 	}
 
-	private int GetSumFirstPoint(Point from)
+	private int YPointDirection(Point from)
 	{
 		return from.X + from.Y;
 	}
 
-	private int GetSumSecondPoint(Point to)
+	private int XPointDirection(Point to)
 	{
 		return to.X + to.Y;
 	}
@@ -101,7 +102,8 @@ public readonly struct Point
 			throw new ArgumentException("Inalid input");
 		}
 	}
-	private bool IsDioganalDirection(int first, int second)
+
+	private bool IsDiagonalDirection(int first, int second)
 	{
 		return first != 0 && second != 0;
 	}

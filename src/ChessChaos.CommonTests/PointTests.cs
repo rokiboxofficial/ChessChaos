@@ -95,19 +95,17 @@ public class PointTests
 	}
 
 	[TestMethod]
-	[DynamicData(nameof(GetExeptionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirectingPoints_AndPointTargetXEqualsSourceXOrPointTargetYEqualsSourceY_ThenThrowException(Point firstPoint, Point secondPoint)
+	[DynamicData(nameof(GetExсeptionPointTests), DynamicDataSourceType.Method)]
+	public void WhenDirectingPoints_AndSourcePointXEqualsTargetPointXOrSourcePointYEqualsTargetPointY_ThenShouldThrowArgumentException(Point firstPoint, Point secondPoint)
 	{
-		// Arange.
-		var resultPoint = new Point();
-
 		// Act.
-		Action act = () => resultPoint.GetDirection(firstPoint, secondPoint);
+		Action act = () => new Point().GetDirection(firstPoint, secondPoint);
 
 		// Assert.
 		act.Should().Throw<ArgumentException>();
 	}
-	private static IEnumerable<object?[]> GetExeptionPointTests()
+
+	private static IEnumerable<object?[]> GetExсeptionPointTests()
 	{
 		yield return new object?[] { new Point(0, 4), new Point(0, 4) };
 		yield return new object?[] { new Point(7, 0), new Point(7, 0) };
@@ -116,123 +114,58 @@ public class PointTests
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceXNegative7YNegative4AndPointTargetX8Y2_ThenDirectionShouldBeDiagonalRightDown()
+	[DynamicData(nameof(GetDiagonalDirectionPointTests), DynamicDataSourceType.Method)]
+	public void WhenDirectionPoints_AndSourceXYNot0AndTargetXYNot0_ThenDirectionShouldBeDiagonal(
+		Point firstPoint, Point secondPoint, Point result)
 	{
-		// Arange.
-		var source = new Point(-7, -4);
-		var target = new Point(8, 2);
-		var resultPoint = new Point();
-
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		var resultPoint = new Point().GetDirection(firstPoint, secondPoint);
 
 		// Assert.
-		resultPoint.Should().Be(new Point(1, 1));
+		resultPoint.Should().Be(result);
+	}
+
+	private static IEnumerable<object?[]> GetDiagonalDirectionPointTests()
+	{
+		yield return new object?[] { new Point(-7, -4), new Point(8, 2), new Point(1, 1) };
+		yield return new object?[] { new Point(8, 6), new Point(3, 4), new Point(-1, -1) };
+		yield return new object?[] { new Point(2, 6), new Point(3, 4), new Point(1, -1) };
+		yield return new object?[] { new Point(7, 1), new Point(5, 2), new Point(-1, 1) };
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX8Y6AndPointTargetX3Y4_ThenDirectionShouldBeDiagonalLeftUp()
+	[DynamicData(nameof(GetVerticalDirectionTests), DynamicDataSourceType.Method)]
+	public void WhenDirectingPoints_AndSourceXNot0AndTargetXNot0_ThenDirectionShouldBeVertical(
+		Point firstPoint, Point secondPoint, Point result)
 	{
-		// Arange.
-		var source = new Point(8, 6);
-		var target = new Point(3, 4);
-		var resultPoint = new Point();
-
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		var resultPoint = new Point().GetDirection(firstPoint, secondPoint);
 
 		// Assert.
-		resultPoint.Should().Be(new Point(-1, -1));
+		resultPoint.Should().Be(result);
+	}
+	private static IEnumerable<object?[]> GetVerticalDirectionTests()
+	{
+		yield return new object?[] { new Point(0, 0), new Point(4, 0), new Point(0, 1) };
+		yield return new object?[] { new Point(0, 0), new Point(-5, 0), new Point(0, -1) };
 	}
 
 	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX2Y6AndPointTargetX3Y4_ThenDirectionShouldBeDiagonalRightUp()
+	[DynamicData(nameof(GetHorizontalDirectionPointTests), DynamicDataSourceType.Method)]
+	public void WhenDirectingPoints_AndSourceYNot0AndTargetYNot0_ThenDirectionShouldBeHorizontal(
+		Point firstPoint, Point secondPoint, Point result)
 	{
-		// Arange.
-		var source = new Point(2, 6);
-		var target = new Point(3, 4);
-		var resultPoint = new Point();
-
 		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
+		var resultPoint = new Point().GetDirection(firstPoint, secondPoint);
 
 		// Assert.
-		resultPoint.Should().Be(new Point(1, -1));
+		resultPoint.Should().Be(result);
 	}
 
-	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX7Y1AndPointTargetX5Y2_ThenDirectionShouldBeDiagonalLeftDown()
+	private static IEnumerable<object?[]> GetHorizontalDirectionPointTests()
 	{
-		// Arange.
-		var source = new Point(7, 1);
-		var target = new Point(5, 2);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(-1, 1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX0YNegative2AndPointTargetX0Y0_ThenDirectionShouldBeHorizontalLeft()
-	{
-		// Arange.
-		var source = new Point(0, -2);
-		var target = new Point(0, 0);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(-1, 0));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX9Y0AndPointTargetX0Y0_ThenDirectionShouldBeHorizontalRight()
-	{
-		// Arange.
-		var source = new Point(9, 0);
-		var target = new Point(0, 0);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(1, 0));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX0Y0AndPointTargetX4Y0_ThenDirectionShouldBeVerticalDown()
-	{
-		// Arange.
-		var source = new Point(0, 0);
-		var target = new Point(4, 0);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(0, 1));
-	}
-
-	[TestMethod]
-	public void WhenDirectingPoints_AndPointSourceX0YNegative2AndPointTargetX0Y0_ThenDirectionShouldBeVerticalUp()
-	{
-		// Arange.
-		var source = new Point(0, 0);
-		var target = new Point(-5, 0);
-		var resultPoint = new Point();
-
-		// Act.
-		resultPoint = resultPoint.GetDirection(source, target);
-
-		// Assert.
-		resultPoint.Should().Be(new Point(0, -1));
+		yield return new object?[] { new Point(9, 0), new Point(0, 0), new Point(1, 0) };
+		yield return new object?[] { new Point(0, -2), new Point(0, 0), new Point(-1, 0) };
 	}
 
 	[TestMethod]
