@@ -99,7 +99,7 @@ public class PointTests
 	public void WhenDirectingPoints_AndSourcePointXEqualsTargetPointXOrSourcePointYEqualsTargetPointY_ThenShouldThrowArgumentException(Point firstPoint, Point secondPoint)
 	{
 		// Act.
-		Action act = () => new Point().GetDirection(firstPoint, secondPoint);
+		Action act = () => Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
 		act.Should().Throw<ArgumentException>();
@@ -119,7 +119,7 @@ public class PointTests
 		Point firstPoint, Point secondPoint, Point result)
 	{
 		// Act.
-		var resultPoint = new Point().GetDirection(firstPoint, secondPoint);
+		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
 		resultPoint.Should().Be(result);
@@ -139,7 +139,7 @@ public class PointTests
 		Point firstPoint, Point secondPoint, Point result)
 	{
 		// Act.
-		var resultPoint = new Point().GetDirection(firstPoint, secondPoint);
+		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
 		resultPoint.Should().Be(result);
@@ -156,7 +156,7 @@ public class PointTests
 		Point firstPoint, Point secondPoint, Point result)
 	{
 		// Act.
-		var resultPoint = new Point().GetDirection(firstPoint, secondPoint);
+		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
 		resultPoint.Should().Be(result);
