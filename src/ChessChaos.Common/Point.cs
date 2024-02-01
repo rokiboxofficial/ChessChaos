@@ -38,36 +38,36 @@ public readonly struct Point
 	{
 		ThrowIfNotValid(from, to);
 
-		var firstPointDirection = YPointDirection(from);
-		var secondPointDirection = XPointDirection(to);
-
-		return IsDiagonalDirection(secondPointDirection, firstPointDirection)
+		return IsDiagonalDirection(from, to)
 			? GetDiagonalDirection(from, to)
 			: GetHorizontalOrVerticalDirection(from, to);
 	}
 
 	private static Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		var firstPointDirection = XPointDirection(to);
-		var secondPointDirection = YPointDirection(from);
-
-		return IsHorizontalDirection(firstPointDirection, secondPointDirection)
-			? GetHorizontalDirection(secondPointDirection, firstPointDirection)
-			: GetVerticalDirection(secondPointDirection, firstPointDirection);
+		return IsHorizontalDirection(from, to)
+			? GetHorizontalDirection(from, to)
+			: GetVerticalDirection(from, to);
 	}
 
-	private static Point GetVerticalDirection(int secondPointDirection, int firstPointDirection)
+	private static Point GetVerticalDirection(Point from, Point to)
 	{
-		return firstPointDirection < 0
-			? new Point(secondPointDirection, firstPointDirection / firstPointDirection * -1)
-			: new Point(secondPointDirection, firstPointDirection / firstPointDirection);
+		var fromPointX = from.X;
+		var toPointY = to.Y;
+
+		return fromPointX < 0
+			? new Point(toPointY - toPointY, fromPointX / fromPointX * -1)
+			: new Point(toPointY - toPointY, fromPointX / fromPointX);
 	}
 
-	private static Point GetHorizontalDirection(int secondPointDirection, int firstPointDirection)
+	private static Point GetHorizontalDirection(Point from, Point to)
 	{
-		return secondPointDirection < 0
-			? new Point(secondPointDirection / secondPointDirection * -1, firstPointDirection)
-			: new Point(secondPointDirection / secondPointDirection, firstPointDirection);
+		var toPointX = to.X;
+		var fromPointY = from.Y;
+
+		return toPointX < 0
+			? new Point(toPointX / toPointX * -1, fromPointY - fromPointY)
+			: new Point(toPointX / toPointX, fromPointY - fromPointY);
 	}
 
 	private static Point GetDiagonalDirection(Point from, Point to)
@@ -77,39 +77,30 @@ public readonly struct Point
 
 		return new Point((x) / Math.Abs(x), (y) / Math.Abs(y));
 	}
-
-	private static int YPointDirection(Point from)
-	{
-		return from.X + from.Y;
-	}
-
-	private static int XPointDirection(Point to)
-	{
-		return to.X + to.Y;
-	}
-
 	private static void ThrowIfNotValid(Point source, Point target)
 	{
 		if (Math.Abs(source.X) == Math.Abs(source.Y)
-			&& Math.Abs(target.X) == Math.Abs(target.Y))
-		{
-			throw new ArgumentException("Inalid input");
-		}
-
-		if (Math.Abs(source.X) == Math.Abs(target.X)
+			&& Math.Abs(target.X) == Math.Abs(target.Y)
+			|| Math.Abs(source.X) == Math.Abs(target.X)
 			&& Math.Abs(source.Y) == Math.Abs(target.Y))
 		{
 			throw new ArgumentException("Inalid input");
 		}
 	}
 
-	private static bool IsDiagonalDirection(int first, int second)
+	private static bool IsDiagonalDirection(Point from, Point to)
 	{
-		return first != 0 && second != 0;
+		var fromPointSum = from.X != to.X;
+		var secondPointSum = from.Y != to.Y;
+
+		return fromPointSum && secondPointSum;
 	}
 
-	private static bool IsHorizontalDirection(int first, int second)
+	private static bool IsHorizontalDirection(Point from, Point to)
 	{
-		return second != 0 && first == 0;
+		var x = Math.Abs(to.X) > Math.Abs(from.X);
+		var y = Math.Abs(to.Y) == Math.Abs(from.Y);
+
+		return x && y;
 	}
 }
