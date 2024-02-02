@@ -77,30 +77,33 @@ public readonly struct Point
 
 		return new Point((x) / Math.Abs(x), (y) / Math.Abs(y));
 	}
+
 	private static void ThrowIfNotValid(Point source, Point target)
 	{
 		if (Math.Abs(source.X) == Math.Abs(source.Y)
 			&& Math.Abs(target.X) == Math.Abs(target.Y)
 			|| Math.Abs(source.X) == Math.Abs(target.X)
-			&& Math.Abs(source.Y) == Math.Abs(target.Y))
+			&& Math.Abs(source.Y) == Math.Abs(target.Y)
+			|| Math.Abs(source.X) >= 100 || Math.Abs(source.Y) >= 100
+			|| Math.Abs(target.X) >= 100 || Math.Abs(target.Y) >= 100)
 		{
-			throw new ArgumentException("Inalid input");
+			throw new ArgumentException("Invalid input");
 		}
 	}
 
 	private static bool IsDiagonalDirection(Point from, Point to)
 	{
-		var fromPointSum = from.X != to.X;
-		var secondPointSum = from.Y != to.Y;
+		var isPointX = from.X != to.X;
+		var isPointY = from.Y != to.Y;
 
-		return fromPointSum && secondPointSum;
+		return isPointX && isPointY;
 	}
 
 	private static bool IsHorizontalDirection(Point from, Point to)
 	{
-		var x = Math.Abs(to.X) > Math.Abs(from.X);
-		var y = Math.Abs(to.Y) == Math.Abs(from.Y);
+		var isPointX = Math.Abs(to.X) > Math.Abs(from.X);
+		var isPointY = Math.Abs(to.Y) == Math.Abs(from.Y);
 
-		return x && y;
+		return isPointX && isPointY;
 	}
 }

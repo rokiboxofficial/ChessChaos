@@ -109,37 +109,37 @@ public class PointTests
 	[TestMethod]
 	[DynamicData(nameof(GetDiagonalDirectionPointTests), DynamicDataSourceType.Method)]
 	public void WhenDirectionPoints_AndSourcePointNotEqualsTargetPoint_ThenDirectionShouldBeDiagonal(
-		Point firstPoint, Point secondPoint, Point result)
+		Point firstPoint, Point secondPoint, Point direction)
 	{
 		// Act.
 		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
-		resultPoint.Should().Be(result);
+		resultPoint.Should().Be(direction);
 	}
 
 	[TestMethod]
 	[DynamicData(nameof(GetVerticalDirectionTests), DynamicDataSourceType.Method)]
 	public void WhenDirectingPoints_AndSourceXNot0AndTargetXNot0_ThenDirectionShouldBeVertical(
-		Point firstPoint, Point secondPoint, Point result)
+		Point firstPoint, Point secondPoint, Point direction)
 	{
 		// Act.
 		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
-		resultPoint.Should().Be(result);
+		resultPoint.Should().Be(direction);
 	}
 
 	[TestMethod]
 	[DynamicData(nameof(GetHorizontalDirectionPointTests), DynamicDataSourceType.Method)]
 	public void WhenDirectingPoints_AndSourceYNot0AndTargetYNot0_ThenDirectionShouldBeHorizontal(
-		Point firstPoint, Point secondPoint, Point result)
+		Point firstPoint, Point secondPoint, Point direction)
 	{
 		// Act.
 		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
 
 		// Assert.
-		resultPoint.Should().Be(result);
+		resultPoint.Should().Be(direction);
 	}
 
 	[TestMethod]
@@ -266,8 +266,7 @@ public class PointTests
 	public void WhenSubtracting_AndPontsAreTheSame_ThenPointXShouldBe0AndPointYShouldBe0()
 	{
 		// Arrange.
-		var firstPoint = new Point(8, 3);
-		var secondPoint = new Point(8, 3);
+		var (firstPoint, secondPoint) = GetSamePoints();
 
 		// Act.
 		var result = firstPoint - secondPoint;
@@ -353,5 +352,9 @@ public class PointTests
 		yield return new object?[] { new Point(7, 0), new Point(7, 0) };
 		yield return new object?[] { new Point(0, 0), new Point(0, 0) };
 		yield return new object?[] { new Point(4, 4), new Point(4, 4) };
+		yield return new object?[] { new Point(0, 0), new Point(1000, -1) };
+		yield return new object?[] { new Point(0, 0), new Point(-1, 200) };
+		yield return new object?[] { new Point(123, 1), new Point(1, 1) };
+		yield return new object?[] { new Point(3, 631), new Point(3, 700) };
 	}
 }
