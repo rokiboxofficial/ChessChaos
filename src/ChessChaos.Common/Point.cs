@@ -45,65 +45,65 @@ public readonly struct Point
 
 	private static Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		return IsHorizontalDirection(from, to)
-			? GetHorizontalDirection(from, to)
-			: GetVerticalDirection(from, to);
+		var subtractPointsXVertical = Math.Abs(from.X) - Math.Abs(to.X);
+
+		return subtractPointsXVertical == 0 && from.X == to.X
+			? GetVerticalDirection(from, to)
+			: GetHorizontalDirection(from, to);
 	}
 
 	private static Point GetVerticalDirection(Point from, Point to)
 	{
-		var fromPointX = from.X;
-		var toPointY = to.Y;
+		var normalizationY = from.Y / from.Y;
 
-		return fromPointX < 0
-			? new Point(toPointY - toPointY, fromPointX / fromPointX * -1)
-			: new Point(toPointY - toPointY, fromPointX / fromPointX);
+		if (from.X != to.X)
+		{
+			throw new ArgumentException("Source point X is not equals Target point X");
+		}
+
+		return from.Y > to.Y
+			? new Point(0, normalizationY * -1)
+			: new Point(0, normalizationY);
 	}
 
 	private static Point GetHorizontalDirection(Point from, Point to)
 	{
-		var toPointX = to.X;
-		var fromPointY = from.Y;
+		var normalizationX = from.X / from.X;
 
-		return toPointX < 0
-			? new Point(toPointX / toPointX * -1, fromPointY - fromPointY)
-			: new Point(toPointX / toPointX, fromPointY - fromPointY);
+		if (from.Y != to.Y)
+		{
+			throw new ArgumentException("Source point Y is not equals Target point Y");
+		}
+
+		return from.X > to.X
+			? new Point(normalizationX * -1, 0)
+			: new Point(normalizationX, 0);
 	}
 
 	private static Point GetDiagonalDirection(Point from, Point to)
 	{
-		var x = to.X - from.X;
-		var y = to.Y - from.Y;
+		var subtractPointsX = to.X - from.X;
+		var subtractPointsY = to.Y - from.Y;
 
-		return new Point((x) / Math.Abs(x), (y) / Math.Abs(y));
+		return new Point((subtractPointsX) / Math.Abs(subtractPointsX),
+				(subtractPointsY) / Math.Abs(subtractPointsY));
 	}
 
-	private static void ThrowIfNotValid(Point source, Point target)
+	private static void ThrowIfNotValid(Point from, Point to)
 	{
-		if (Math.Abs(source.X) == Math.Abs(source.Y)
-			&& Math.Abs(target.X) == Math.Abs(target.Y)
-			|| Math.Abs(source.X) == Math.Abs(target.X)
-			&& Math.Abs(source.Y) == Math.Abs(target.Y)
-			|| Math.Abs(source.X) >= 100 || Math.Abs(source.Y) >= 100
-			|| Math.Abs(target.X) >= 100 || Math.Abs(target.Y) >= 100)
+		if (from.X == to.X && from.Y == to.Y
+			|| from.X == 0 && to.X == 0
+			&& from.Y == 0 && to.Y == 0)
 		{
-			throw new ArgumentException("Invalid input");
+			throw new ArgumentException();
 		}
 	}
 
 	private static bool IsDiagonalDirection(Point from, Point to)
 	{
-		var isPointX = from.X != to.X;
-		var isPointY = from.Y != to.Y;
+		var isFromAndToPointsXNotEquals = Math.Abs(from.X) - Math.Abs(to.X);
+		var isFromAndToPointsYNotEquals = Math.Abs(from.Y) - Math.Abs(to.Y);
 
-		return isPointX && isPointY;
-	}
-
-	private static bool IsHorizontalDirection(Point from, Point to)
-	{
-		var isPointX = Math.Abs(to.X) > Math.Abs(from.X);
-		var isPointY = Math.Abs(to.Y) == Math.Abs(from.Y);
-
-		return isPointX && isPointY;
+		return Math.Abs(isFromAndToPointsXNotEquals) == Math.Abs(isFromAndToPointsYNotEquals);
 	}
 }

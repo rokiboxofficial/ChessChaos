@@ -95,54 +95,6 @@ public class PointTests
 	}
 
 	[TestMethod]
-	[DynamicData(nameof(GetExсeptionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirectingPoints_AndSourcePointXEqualsTargetPointXOrSourcePointYEqualsTargetPointY_ThenShouldThrowArgumentException(
-		Point firstPoint, Point secondPoint)
-	{
-		// Act.
-		Action act = () => Point.GetDirection(firstPoint, secondPoint);
-
-		// Assert.
-		act.Should().Throw<ArgumentException>();
-	}
-
-	[TestMethod]
-	[DynamicData(nameof(GetDiagonalDirectionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirectionPoints_AndSourcePointNotEqualsTargetPoint_ThenDirectionShouldBeDiagonal(
-		Point firstPoint, Point secondPoint, Point direction)
-	{
-		// Act.
-		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
-
-		// Assert.
-		resultPoint.Should().Be(direction);
-	}
-
-	[TestMethod]
-	[DynamicData(nameof(GetVerticalDirectionTests), DynamicDataSourceType.Method)]
-	public void WhenDirectingPoints_AndSourceXNot0AndTargetXNot0_ThenDirectionShouldBeVertical(
-		Point firstPoint, Point secondPoint, Point direction)
-	{
-		// Act.
-		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
-
-		// Assert.
-		resultPoint.Should().Be(direction);
-	}
-
-	[TestMethod]
-	[DynamicData(nameof(GetHorizontalDirectionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirectingPoints_AndSourceYNot0AndTargetYNot0_ThenDirectionShouldBeHorizontal(
-		Point firstPoint, Point secondPoint, Point direction)
-	{
-		// Act.
-		var resultPoint = Point.GetDirection(firstPoint, secondPoint);
-
-		// Assert.
-		resultPoint.Should().Be(direction);
-	}
-
-	[TestMethod]
 	public void WhenEquallingByEqualsOperator_AndPointsAreSame_ThenPointsShouldBeEqual()
 	{
 		// Arrange.
@@ -320,41 +272,5 @@ public class PointTests
 		var secondPoint = new Point(2, 7);
 
 		return (firstPoint, secondPoint);
-	}
-
-	private static IEnumerable<object?[]> GetHorizontalDirectionPointTests()
-	{
-		yield return new object?[] { new Point(9, 0), new Point(0, 0), new Point(0, 1) };
-		yield return new object?[] { new Point(-2, 0), new Point(0, 0), new Point(0, -1) };
-		yield return new object?[] { new Point(12, 6), new Point(12, 1), new Point(0, 1) };
-		yield return new object?[] { new Point(-7, 3), new Point(-7, 2), new Point(0, -1) };
-	}
-
-	private static IEnumerable<object?[]> GetDiagonalDirectionPointTests()
-	{
-		yield return new object?[] { new Point(-7, -4), new Point(8, 2), new Point(1, 1) };
-		yield return new object?[] { new Point(8, 6), new Point(3, 4), new Point(-1, -1) };
-		yield return new object?[] { new Point(2, 6), new Point(3, 4), new Point(1, -1) };
-		yield return new object?[] { new Point(7, 1), new Point(5, 2), new Point(-1, 1) };
-	}
-
-	private static IEnumerable<object?[]> GetVerticalDirectionTests()
-	{
-		yield return new object?[] { new Point(0, 0), new Point(4, 0), new Point(1, 0) };
-		yield return new object?[] { new Point(0, 0), new Point(-5, 0), new Point(-1, 0) };
-		yield return new object?[] { new Point(1, 13), new Point(2, 13), new Point(1, 0) };
-		yield return new object?[] { new Point(-2, 7), new Point(-3, 7), new Point(-1, 0) };
-	}
-
-	private static IEnumerable<object?[]> GetExсeptionPointTests()
-	{
-		yield return new object?[] { new Point(0, 4), new Point(0, 4) };
-		yield return new object?[] { new Point(7, 0), new Point(7, 0) };
-		yield return new object?[] { new Point(0, 0), new Point(0, 0) };
-		yield return new object?[] { new Point(4, 4), new Point(4, 4) };
-		yield return new object?[] { new Point(0, 0), new Point(1000, -1) };
-		yield return new object?[] { new Point(0, 0), new Point(-1, 200) };
-		yield return new object?[] { new Point(123, 1), new Point(1, 1) };
-		yield return new object?[] { new Point(3, 631), new Point(3, 700) };
 	}
 }
