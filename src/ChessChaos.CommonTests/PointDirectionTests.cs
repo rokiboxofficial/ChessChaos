@@ -10,7 +10,7 @@ public class PointDirectionTests
 	[DynamicData(nameof(GetHorizontalDirectionPointTests), DynamicDataSourceType.Method)]
 	[DynamicData(nameof(GetVerticalDirectionTests), DynamicDataSourceType.Method)]
 	[DynamicData(nameof(GetDiagonalDirectionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirectingPoints_AndSourceYNot0AndTargetYNot0_ThenDirectionShouldBeHorizontal(
+	public void WhenDirection_AndPointsAreGood_ThenDirectionShouldBeCorrect(
 		Point firstPoint, Point secondPoint, Point direction)
 	{
 		// Act.
@@ -22,7 +22,7 @@ public class PointDirectionTests
 
 	[TestMethod]
 	[DynamicData(nameof(GetExсeptionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirectingPoints_AndSourcePointXEqualsTargetPointXOrSourcePointYEqualsTargetPointY_ThenShouldThrowArgumentException(
+	public void WhenDirecting_AndPointsAreBad_ThenShouldThrowArgumentException(
 		Point firstPoint, Point secondPoint)
 	{
 		// Act.
@@ -57,7 +57,7 @@ public class PointDirectionTests
 		yield return new object?[] { new Point(0, 4), new Point(0, 4) };
 		yield return new object?[] { new Point(0, 0), new Point(0, 0) };
 
-		yield return new object?[] { new Point(8, -5), new Point(120, -6) };
+		yield return new object?[] { new Point(8, -5), new Point(8000, -8) };
 		yield return new object?[] { new Point(23, -7), new Point(-450, -8) };
 		yield return new object?[] { new Point(8, -5), new Point(9, -108) };
 		yield return new object?[] { new Point(17, 1), new Point(18, 400) };

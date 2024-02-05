@@ -45,65 +45,53 @@ public readonly struct Point
 
 	private static Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		var subtractPointsXVertical = Math.Abs(from.X) - Math.Abs(to.X);
+		if (from.X == to.X)
+		{
+			return GetVerticalDirection(from, to);
+		}
 
-		return subtractPointsXVertical == 0 && from.X == to.X
-			? GetVerticalDirection(from, to)
-			: GetHorizontalDirection(from, to);
+		else if (from.Y == to.Y)
+		{
+			return GetHorizontalDirection(from, to);
+		}
+
+		throw new ArgumentException("The direction was not horizontal and vertical");
 	}
 
 	private static Point GetVerticalDirection(Point from, Point to)
 	{
-		var normalizationY = from.Y / from.Y;
-
-		if (from.X != to.X)
-		{
-			throw new ArgumentException("Source point X is not equals Target point X");
-		}
-
-		return from.Y > to.Y
-			? new Point(0, normalizationY * -1)
-			: new Point(0, normalizationY);
+		return from.Y > to.Y ? new Point(0, -1) : new Point(0, 1);
 	}
 
 	private static Point GetHorizontalDirection(Point from, Point to)
 	{
-		var normalizationX = from.X / from.X;
-
-		if (from.Y != to.Y)
-		{
-			throw new ArgumentException("Source point Y is not equals Target point Y");
-		}
-
-		return from.X > to.X
-			? new Point(normalizationX * -1, 0)
-			: new Point(normalizationX, 0);
+		return from.X > to.X ? new Point(-1, 0) : new Point(1, 0);
 	}
 
 	private static Point GetDiagonalDirection(Point from, Point to)
 	{
-		var subtractPointsX = to.X - from.X;
-		var subtractPointsY = to.Y - from.Y;
+		var differenceBetweenX = to.X - from.X;
+		var differenceBetweenY = to.Y - from.Y;
 
-		return new Point((subtractPointsX) / Math.Abs(subtractPointsX),
-				(subtractPointsY) / Math.Abs(subtractPointsY));
+		return new Point((differenceBetweenX) / Math.Abs(differenceBetweenX),
+				(differenceBetweenY) / Math.Abs(differenceBetweenY));
 	}
 
 	private static void ThrowIfNotValid(Point from, Point to)
 	{
-		if (from.X == to.X && from.Y == to.Y
-			|| from.X == 0 && to.X == 0
-			&& from.Y == 0 && to.Y == 0)
+		if ((from.X == to.X && from.Y == to.Y)
+			|| (from.X == 0 && to.X == 0
+			&& from.Y == 0 && to.Y == 0))
 		{
-			throw new ArgumentException();
+			throw new ArgumentException("The direction of the point has not changed or direction equals 0");
 		}
 	}
 
 	private static bool IsDiagonalDirection(Point from, Point to)
 	{
-		var isFromAndToPointsXNotEquals = Math.Abs(from.X) - Math.Abs(to.X);
-		var isFromAndToPointsYNotEquals = Math.Abs(from.Y) - Math.Abs(to.Y);
+		var differenceBetweenX = Math.Abs(from.X) - Math.Abs(to.X);
+		var differenceBetweenY = Math.Abs(from.Y) - Math.Abs(to.Y);
 
-		return Math.Abs(isFromAndToPointsXNotEquals) == Math.Abs(isFromAndToPointsYNotEquals);
+		return Math.Abs(differenceBetweenX) == Math.Abs(differenceBetweenY);
 	}
 }

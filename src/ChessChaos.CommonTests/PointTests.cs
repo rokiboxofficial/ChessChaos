@@ -223,7 +223,7 @@ public class PointTests
 		// Act.
 		var result = firstPoint - secondPoint;
 
-		// Assert.
+		// Assert.s
 		result.Should().Be(new Point(0, 0));
 	}
 
