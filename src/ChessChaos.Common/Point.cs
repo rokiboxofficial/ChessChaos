@@ -45,8 +45,6 @@ public readonly struct Point
 
 	private static Point GetHorizontalOrVerticalDirection(Point from, Point to)
 	{
-		ThrowIfDirectionAreNotCorrect(from, to);
-
 		return from.X == to.X
 			? GetVerticalDirection(from, to)
 			: GetHorizontalDirection(from, to);
@@ -73,18 +71,12 @@ public readonly struct Point
 
 	private static void ThrowIfNotValid(Point from, Point to)
 	{
-		if ((from.X == to.X && from.Y == to.Y)
-			|| (from.X == 0 && to.X == 0
-			&& from.Y == 0 && to.Y == 0))
+		if ((Math.Abs(from.X) == Math.Abs(to.X) && Math.Abs(from.Y) == Math.Abs(to.Y))
+			|| ((from.X == 0 && to.X == 0) && (from.Y == 0 && to.Y == 0))
+			|| (from.X != to.X && from.Y != to.Y && (!IsDiagonalDirection(from, to))))
 		{
 			throw new ArgumentException("The direction of the point has not changed or direction equals 0");
 		}
-	}
-
-	private static void ThrowIfDirectionAreNotCorrect(Point from, Point to)
-	{
-		if (from.X != to.X && from.Y != to.Y)
-			throw new ArgumentException("The point does not lie horizontall or verticall");
 	}
 
 	private static bool IsDiagonalDirection(Point from, Point to)
