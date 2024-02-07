@@ -10,7 +10,7 @@ public class PointDirectionTests
 	[DynamicData(nameof(GetHorizontalDirectionPointTests), DynamicDataSourceType.Method)]
 	[DynamicData(nameof(GetVerticalDirectionTests), DynamicDataSourceType.Method)]
 	[DynamicData(nameof(GetDiagonalDirectionPointTests), DynamicDataSourceType.Method)]
-	public void WhenDirection_AndPointsAreGood_ThenDirectionShouldBeCorrect(
+	public void WhenDirecting_AndPointsAreGood_ThenDirectionShouldBeCorrect(
 		Point firstPoint, Point secondPoint, Point direction)
 	{
 		// Act.
