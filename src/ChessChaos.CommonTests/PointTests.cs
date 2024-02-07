@@ -227,6 +227,7 @@ public class PointTests
 		result.Should().Be(new Point(0, 0));
 	}
 
+
 	[TestMethod]
 	public void WhenSubtracting_AndFirstPointXIsPositiveAndYIsNegativeAndSecondPointXNegativeAndYPositive_ThenPointShouldBeCorrect()
 	{
