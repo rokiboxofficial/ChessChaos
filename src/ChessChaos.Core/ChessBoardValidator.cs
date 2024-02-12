@@ -13,16 +13,9 @@ internal class ChessBoardValidator : IChessBoardValidator
 		_chessMove = chessMove;
 	}
 
-	public IValidatedBoard ValidteBoard(Action<IChessGameStateReader> accessor)
+	public IValidatedBoard ValidateBoard(Action<IChessGameStateReader> accessor)
 	{
-		_boardProvider.AccessBoard(accessor);
-
-		return new ValidatedBoard(_boardProvider, _chessMove);
-	}
-
-	public IValidatedBoard ValidateBoard(Action<IChessGameStateReader> accessor, IChessMove chessMove)
-	{
-		_boardProvider.AccessBoard(chessMove, accessor);
+		_boardProvider.AccessBoard(_chessMove, accessor);
 
 		return new ValidatedBoard(_boardProvider, _chessMove);
 	}

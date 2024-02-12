@@ -138,14 +138,11 @@ public class FromPointsTests
 			{
 				if (move.From != from || move.To != to)
 					throw new Exception();
-			});
-
-		var boardState = fromPoint
-			.ValidateBoard(board => { }
-			, new SimpleMove(from, to, pieceKing, pieceBishop));
+			})
+			.ValidateBoard(board => { if (board[from] == board[to]) throw new Exception(); });
 
 		// Assert.
-		boardState.Should().NotBe(null);
+		fromPoint.Should().NotBe(null);
 	}
 
 	[TestMethod]
@@ -155,7 +152,7 @@ public class FromPointsTests
 		var pieceKing = new PieceProvider()
 			.GetInstance(PieceKind.King, SideColor.White);
 		var pieceBishop = new PieceProvider()
-			.GetInstance(PieceKind.King, SideColor.Black);
+			.GetInstance(PieceKind.Bishop, SideColor.Black);
 		var pieceOnPoint = new List<(Point point, Piece piece)>();
 		var realPointsOnTheBoard = new HashSet<Point>();
 
@@ -179,13 +176,10 @@ public class FromPointsTests
 			{
 				if (move.From != from || move.To != to)
 					throw new Exception();
-			});
-
-		var boardState = fromPoint
-			.ValidateBoard(board => { },
-			new SimpleMove(from, to, pieceKing, pieceBishop));
+			})
+			.ValidateBoard(board => { if (board[from] == board[to]) throw new Exception(); });
 
 		// Assert.
-		boardState.Should().NotBe(null);
+		fromPoint.Should().NotBe(null);
 	}
 }

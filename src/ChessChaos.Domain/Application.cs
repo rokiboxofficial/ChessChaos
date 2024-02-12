@@ -65,7 +65,7 @@ public class Application
 			// TODO: add try/catch and custom exceptions
 			_chessBoard.FromPoints(chessMessage.From, chessMessage.To)
 				.ValidateMove(move => { if (move.Self.Color != chessMessage.PlayerColor) throw new Exception(); })
-				.ValidteBoard(chessGameStateReader => _chessBoardValidator.ValidateBoard(chessGameStateReader, chessMessage.PlayerColor))
+				.ValidateBoard(chessGameStateReader => _chessBoardValidator.ValidateBoard(chessGameStateReader, chessMessage.PlayerColor))
 				.Apply();
 		}
 		catch
