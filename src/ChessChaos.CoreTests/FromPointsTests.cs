@@ -110,7 +110,7 @@ public class FromPointsTests
 			new Point(4,4), new Point(1,-1) };
 
 		// Act.
-		var fromPoint = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+		Action fromPoint = () => new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
 			.FromPoints(from, to)
 			.ValidateMove(move =>
 			{
@@ -119,12 +119,12 @@ public class FromPointsTests
 			})
 			.ValidateBoard(board =>
 			{
-				if (board.IsRealPoint(from) == board.IsRealPoint(new Point(21, 28)))
+				if (board[from] != board[to])
 					throw new Exception();
 			});
 
 		// Assert.
-		fromPoint.Should().NotBe(null);
+		fromPoint.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
@@ -147,7 +147,7 @@ public class FromPointsTests
 			new Point(4,4), new Point(1,-1) };
 
 		// Act.
-		var boardChek = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+		Action boardChek = () => new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
 			.FromPoints(from, to)
 			.ValidateMove(move =>
 			{
@@ -156,12 +156,12 @@ public class FromPointsTests
 			})
 			.ValidateBoard(board =>
 			{
-				if (board.IsRealPoint(from) != board.IsRealPoint(to))
+				if (board[from] != board[to])
 					throw new Exception();
 			});
 
 		// Assert.
-		boardChek.Should().NotBe(null);
+		boardChek.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
@@ -202,7 +202,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardsIsNotValid_ThrowException()
+	public void WhenMovingPieces_AndBoardStateIsApply_TheBoardIsApply()
 	{
 		// Arrange.
 		var pieceKing = new PieceProvider()
@@ -228,26 +228,18 @@ public class FromPointsTests
 				if (move.From != from || move.To != to)
 					throw new Exception();
 			})
-			.ValidateBoard(board =>
-			{
-				if (board[from] != board[to])
-					throw new Exception();
-			}).Apply();
+			.ValidateBoard(board => { }).Apply();
 
-		Action secondBoardCheck = () => new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+		var secondBoardCheck = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
 			.FromPoints(from, to)
 			.ValidateMove(move =>
 			{
 				if (move.From != from || move.To != to)
 					throw new Exception();
 			})
-			.ValidateBoard(board =>
-			{
-				if (board[from] != board[to])
-					throw new Exception();
-			});
+			.ValidateBoard(board => { });
 
 		// Assert.
-		firstBoardCheck.Should().NotBeSameAs(secondBoardCheck);
+		firstBoardCheck.Should().NotBeOfType(secondBoardCheck.GetType());
 	}
 }
