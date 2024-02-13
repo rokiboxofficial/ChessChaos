@@ -14,22 +14,17 @@ public class FromPointsTests
 		// Arrange.
 		var pieceKing = new PieceProvider()
 			.GetInstance(PieceKind.King, SideColor.White);
-		var piceOnPoint = new List<(Point point, Piece piece)>();
-		var realPointsOnTheBoard = new HashSet<Point>();
 
 		var from = new Point(1, 1);
 		var to = new Point(21, 6);
 
-		realPointsOnTheBoard.Add(to);
-		realPointsOnTheBoard.Add(new Point(1, 0));
-		realPointsOnTheBoard.Add(new Point(0, 1));
-		realPointsOnTheBoard.Add(new Point(-1, 0));
-		realPointsOnTheBoard.Add(new Point(0, -1));
-		realPointsOnTheBoard.Add(new Point(-1, -1));
-		realPointsOnTheBoard.Add(new Point(-1, 1));
-		realPointsOnTheBoard.Add(new Point(1, -1));
+		var piceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from, pieceKing) };
 
-		piceOnPoint.Add((from, pieceKing));
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ from, to, new Point(1,0), new Point(0,1),
+			new Point(-1,0), new Point(0,-1), new Point(-1,-1),
+			new Point(-1,1), new Point(1,-1) };
 
 		// Act.
 		var chessBoard = new ChessBoard(realPointsOnTheBoard, piceOnPoint);
@@ -45,22 +40,17 @@ public class FromPointsTests
 		// Arrange.
 		var pieceKing = new PieceProvider()
 			.GetInstance(PieceKind.King, SideColor.White);
-		var pieceOnPoint = new List<(Point point, Piece piece)>();
-		var realPointsOnTheBoard = new HashSet<Point>();
+
 		var from = new Point(1, 1);
 		var to = new Point(3, 3);
 
-		realPointsOnTheBoard.Add(to);
-		realPointsOnTheBoard.Add(from);
-		realPointsOnTheBoard.Add(new Point(1, 0));
-		realPointsOnTheBoard.Add(new Point(0, 1));
-		realPointsOnTheBoard.Add(new Point(-1, 0));
-		realPointsOnTheBoard.Add(new Point(0, -1));
-		realPointsOnTheBoard.Add(new Point(-1, -1));
-		realPointsOnTheBoard.Add(new Point(-1, 1));
-		realPointsOnTheBoard.Add(new Point(1, -1));
+		var pieceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from, pieceKing) };
 
-		pieceOnPoint.Add((from, pieceKing));
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ from, to, new Point(1,0), new Point(0,1),
+			new Point(-1,0), new Point(0,-1), new Point(-1,-1),
+			new Point(-1,1), new Point(1,-1) };
 
 		// Act.
 		var chessBoard = new ChessBoard(realPointsOnTheBoard, pieceOnPoint);
@@ -76,26 +66,20 @@ public class FromPointsTests
 		// Arrange.
 		var pieceKing = new PieceProvider()
 			.GetInstance(PieceKind.King, SideColor.White);
-		var pieceOnPoint = new List<(Point point, Piece piece)>();
-		var realPointsOnTheBoard = new HashSet<Point>();
 
 		var from = new Point(0, 0);
 		var to = new Point(1, 1);
 
-		realPointsOnTheBoard.Add(to);
-		realPointsOnTheBoard.Add(from);
-		realPointsOnTheBoard.Add(new Point(1, 4));
-		realPointsOnTheBoard.Add(new Point(3, 2));
-		realPointsOnTheBoard.Add(new Point(4, 4));
-		realPointsOnTheBoard.Add(new Point(1, -1));
+		var pieceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from, pieceKing) };
 
-		pieceOnPoint.Add((from, pieceKing));
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ from, to, new Point(1,4), new Point(3,2),
+			new Point(4,4), new Point(1,-1) };
 
 		// Act.
 		var fromPoints = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
-			.FromPoints(from, to);
-
-		var move = fromPoints
+			.FromPoints(from, to)
 			.ValidateMove(move =>
 			{
 				if (move.From != from || move.To != to)
@@ -103,11 +87,11 @@ public class FromPointsTests
 			});
 
 		// Assert.
-		move.Should().NotBe(null);
+		fromPoints.Should().NotBe(null);
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsCorrect_WhenBoardShouldBeChanged()
+	public void WhenMovingPieces_AndPointOnTheBoardIsNotReal_WhenBoardShouldBeChanged()
 	{
 		// Arrange.
 		var pieceKing = new PieceProvider()
@@ -115,21 +99,15 @@ public class FromPointsTests
 		var pieceBishop = new PieceProvider()
 			.GetInstance(PieceKind.Bishop, SideColor.Black);
 
-		var pieceOnPoint = new List<(Point point, Piece piece)>();
-		var realPointsOnTheBoard = new HashSet<Point>();
-
 		var from = new Point(6, 6);
 		var to = new Point(7, 7);
 
-		realPointsOnTheBoard.Add(to);
-		realPointsOnTheBoard.Add(from);
-		realPointsOnTheBoard.Add(new Point(1, 4));
-		realPointsOnTheBoard.Add(new Point(3, 2));
-		realPointsOnTheBoard.Add(new Point(4, 4));
-		realPointsOnTheBoard.Add(new Point(1, -1));
+		var pieceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from,pieceKing), (to,pieceBishop) };
 
-		pieceOnPoint.Add((from, pieceKing));
-		pieceOnPoint.Add((to, pieceBishop));
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ to, from, new Point(1,4), new Point(3,2),
+			new Point(4,4), new Point(1,-1) };
 
 		// Act.
 		var fromPoint = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
@@ -139,7 +117,11 @@ public class FromPointsTests
 				if (move.From != from || move.To != to)
 					throw new Exception();
 			})
-			.ValidateBoard(board => { if (board[from] == board[to]) throw new Exception(); });
+			.ValidateBoard(board =>
+			{
+				if (board.IsRealPoint(from) == board.IsRealPoint(new Point(21, 28)))
+					throw new Exception();
+			});
 
 		// Assert.
 		fromPoint.Should().NotBe(null);
@@ -153,33 +135,119 @@ public class FromPointsTests
 			.GetInstance(PieceKind.King, SideColor.White);
 		var pieceBishop = new PieceProvider()
 			.GetInstance(PieceKind.Bishop, SideColor.Black);
-		var pieceOnPoint = new List<(Point point, Piece piece)>();
-		var realPointsOnTheBoard = new HashSet<Point>();
 
 		var from = new Point(1, 1);
 		var to = new Point(2, 2);
 
-		realPointsOnTheBoard.Add(to);
-		realPointsOnTheBoard.Add(from);
-		realPointsOnTheBoard.Add(new Point(1, 4));
-		realPointsOnTheBoard.Add(new Point(3, 2));
-		realPointsOnTheBoard.Add(new Point(4, 4));
-		realPointsOnTheBoard.Add(new Point(1, -1));
+		var pieceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from,pieceKing), (to,pieceBishop) };
 
-		pieceOnPoint.Add((from, pieceKing));
-		pieceOnPoint.Add((to, pieceBishop));
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ to, from, new Point(1,4), new Point(3,2),
+			new Point(4,4), new Point(1,-1) };
 
 		// Act.
-		var fromPoint = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+		var boardChek = new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
 			.FromPoints(from, to)
 			.ValidateMove(move =>
 			{
 				if (move.From != from || move.To != to)
 					throw new Exception();
 			})
-			.ValidateBoard(board => { if (board[from] == board[to]) throw new Exception(); });
+			.ValidateBoard(board =>
+			{
+				if (board.IsRealPoint(from) != board.IsRealPoint(to))
+					throw new Exception();
+			});
 
 		// Assert.
-		fromPoint.Should().NotBe(null);
+		boardChek.Should().NotBe(null);
+	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndBoardStateIsNotValid_ThrowException()
+	{
+		// Arrange.
+		var pieceKing = new PieceProvider()
+			.GetInstance(PieceKind.King, SideColor.White);
+		var pieceBishop = new PieceProvider()
+			.GetInstance(PieceKind.Bishop, SideColor.Black);
+
+		var from = new Point(1, 1);
+		var to = new Point(2, 2);
+
+		var pieceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from,pieceKing), (to,pieceBishop) };
+
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ to, from, new Point(1,4), new Point(3,2),
+			new Point(4,4), new Point(1,-1) };
+
+		// Act.
+		Action boardChek = () => new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+			.FromPoints(from, to)
+			.ValidateMove(move =>
+			{
+				if (move.From != from || move.To != to)
+					throw new Exception();
+			})
+			.ValidateBoard(board =>
+			{
+				if (board[from] != board[to])
+					throw new Exception();
+			});
+
+		// Assert.
+		boardChek.Should().Throw<Exception>();
+	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndBoardsIsNotValid_ThrowException()
+	{
+		// Arrange.
+		var pieceKing = new PieceProvider()
+			.GetInstance(PieceKind.King, SideColor.White);
+		var pieceBishop = new PieceProvider()
+			.GetInstance(PieceKind.Bishop, SideColor.Black);
+
+		var from = new Point(1, 1);
+		var to = new Point(2, 2);
+
+		var pieceOnPoint = new List<(Point point, Piece piece)>()
+		{ (from,pieceKing), (to,pieceBishop) };
+
+		var realPointsOnTheBoard = new HashSet<Point>()
+		{ to, from, new Point(1,4), new Point(3,2),
+			new Point(4,4), new Point(1,-1) };
+
+		// Act.
+		Action firstBoardCheck = () => new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+			.FromPoints(from, to)
+			.ValidateMove(move =>
+			{
+				if (move.From != from || move.To != to)
+					throw new Exception();
+			})
+			.ValidateBoard(board =>
+			{
+				if (board[from] != board[to])
+					throw new Exception();
+			}).Apply();
+
+		Action secondBoardCheck = () => new ChessBoard(realPointsOnTheBoard, pieceOnPoint)
+			.FromPoints(from, to)
+			.ValidateMove(move =>
+			{
+				if (move.From != from || move.To != to)
+					throw new Exception();
+			})
+			.ValidateBoard(board =>
+			{
+				if (board[from] != board[to])
+					throw new Exception();
+			});
+
+		// Assert.
+		firstBoardCheck.Should().NotBeSameAs(secondBoardCheck);
 	}
 }

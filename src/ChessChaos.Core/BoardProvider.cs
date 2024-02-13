@@ -23,8 +23,6 @@ internal class BoardProvider
 
 		using var boardContext = new BoardContext(_chessGameStateReader, revertAction);
 		accessor?.Invoke(boardContext.ChessGameState);
-
-		move.Revert(_chessGameStateWriter);
 	}
 
 	internal void Apply(ICommand move)
