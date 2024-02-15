@@ -13,6 +13,6 @@ internal class ValidatedBoard : IValidatedBoard
 		_chessMove = chessMove;
 	}
 
-	public void Apply()
+	public IChessGameStateReader Apply()
 		=> _boardProvider.Apply(_chessMove);
 }
