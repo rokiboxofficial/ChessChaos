@@ -183,4 +183,43 @@ public class FromPointsTests
 		// Assert.
 		act.Should().Throw<Exception>();
 	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndWhiteBishopKillBlackBishop_WhenBlackBishopDisappeared()
+	{
+		// Arrange
+		var provider = new PieceProvider();
+
+		var chessBoard = new ChessBoard(
+			new HashSet<Point>()
+			{
+				new Point(0,0),
+				new Point(1,1),
+			},
+			new List<(Point, Piece)>
+			{
+				(new Point(0,0), provider.GetInstance(PieceKind.Bishop, SideColor.White)),
+				(new Point(1,1), provider.GetInstance(PieceKind.Bishop, SideColor.Black))
+			});
+
+		chessBoard.FromPoints(new Point(0, 0), new Point(1, 1))
+			.ValidateMove(move => { })
+			.ValidateBoard(board => { })
+			.Apply();
+
+		var isSaveMove = false;
+		chessBoard.AccessBoard(state =>
+		{
+			var fromPointState = state[new Point(0, 0)];
+			var toPointState = state[new Point(1, 1)];
+
+			if (fromPointState == null
+			&& toPointState == provider.GetInstance(PieceKind.Bishop, SideColor.White))
+			{
+				isSaveMove = true;
+			}
+		});
+
+		isSaveMove.Should().BeTrue();
+	}
 }
