@@ -81,76 +81,6 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndPieceMoveCorrect_ThenMoveIsCorrect()
-	{
-		// Arrange.
-		var whiteKing = new PieceProvider()
-			.GetInstance(PieceKind.King, SideColor.White);
-
-		var from = new Point(0, 0);
-		var to = new Point(1, 1);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from, whiteKing)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			from,to,
-			new Point(1,4),
-			new Point(3,2),
-			new Point(4,4),
-			new Point(1,-1)
-		};
-
-		// Act.
-		var validateMove = new ChessBoard(realPoints, piecesOnThePoints)
-			.FromPoints(from, to)
-			.ValidateMove(move => { });
-
-		// Assert.
-		validateMove.Should().NotBe(null);
-	}
-
-	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsCorrect_WhenBoardIsValid()
-	{
-		// Arrange.
-		var whiteKing = new PieceProvider()
-			.GetInstance(PieceKind.King, SideColor.White);
-		var blackBishop = new PieceProvider()
-			.GetInstance(PieceKind.Bishop, SideColor.Black);
-
-		var from = new Point(1, 1);
-		var to = new Point(2, 2);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from,whiteKing),
-			(to,blackBishop)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			to, from,
-			new Point(1,4),
-			new Point(3,2),
-			new Point(4,4),
-			new Point(1,-1)
-		};
-
-		// Act.
-		var validateBoard = new ChessBoard(realPoints, piecesOnThePoints)
-			.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board => { });
-
-		// Assert.
-		validateBoard.Should().NotBe(null);
-	}
-
-	[TestMethod]
 	public void WhenMovingPieces_AndBoardStateIsNotValid_ThrowException()
 	{
 		// Arrange.
@@ -221,10 +151,10 @@ public class FromPointsTests
 			.ValidateMove(move => { })
 			.ValidateBoard(board => { }).Apply();
 
-		var pointMove = validateBoard[to].ToString();
+		var pieceIsMoved = validateBoard[to].ToString();
 
 		// Assert.
-		pointMove.Should().Be("ChessChaos.Common.Pieces.Bishop");
+		pieceIsMoved.Should().Be("ChessChaos.Common.Pieces.Bishop");
 	}
 
 	[TestMethod]

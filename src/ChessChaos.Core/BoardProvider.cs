@@ -28,7 +28,7 @@ internal class BoardProvider
 
 	internal IChessGameStateReader Apply(ICommand move)
 	{
-		var revertAction = ExecuteActionAndGetRevertAction1(move);
+		var revertAction = ExecuteAction(move);
 
 		using var boardContext = new BoardContext(_chessGameStateReader, revertAction);
 
@@ -36,7 +36,6 @@ internal class BoardProvider
 
 		return _chessGameStateReader;
 	}
-
 
 	private Action ExecuteActionAndGetRevertAction(ICommand move)
 	{
@@ -54,15 +53,11 @@ internal class BoardProvider
 		return revertAction;
 	}
 
-	private Action ExecuteActionAndGetRevertAction1(ICommand move)
+	private Action ExecuteAction(ICommand move)
 	{
 		move.Execute(_chessGameStateWriter);
 
-		// TODO: probably extract to service
-		// box to reverting action (fields)
-		Action revertAction = () =>
-		{
-		};
+		Action revertAction = () => { };
 
 		return revertAction;
 	}
