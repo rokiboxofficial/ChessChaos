@@ -43,7 +43,7 @@ public class FromPointsTests
 			new HashSet<Point>()
 			{
 				new Point(0,0),
-				new Point(1,3),
+				new Point(1,0),
 			},
 			new List<(Point, Piece)>
 			{
@@ -53,7 +53,7 @@ public class FromPointsTests
 
 		// Act.
 		Action whiteKingMove = () =>
-			boardProvider.FromPoints(new Point(0, 0), new Point(1, 3))
+			boardProvider.FromPoints(new Point(0, 0), new Point(1, 0))
 			.ValidateMove(move => { });
 
 		// Assert.
