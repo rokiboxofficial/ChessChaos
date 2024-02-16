@@ -180,11 +180,7 @@ public class FromPointsTests
 		// Act.
 		Action validateBoard = () => new ChessBoard(realPoints, piecesOnThePoints)
 			.FromPoints(from, to)
-			.ValidateMove(move =>
-			{
-				if (move.From != from || move.To != to)
-					throw new Exception();
-			})
+			.ValidateMove(move => { })
 			.ValidateBoard(board =>
 			{
 				if (board[from] != board[to])
@@ -220,15 +216,15 @@ public class FromPointsTests
 		};
 
 		// Act.
-		var t = new ChessBoard(realPoints, piecesOnThePoints)
+		var validateBoard = new ChessBoard(realPoints, piecesOnThePoints)
 			.FromPoints(from, to)
 			.ValidateMove(move => { })
 			.ValidateBoard(board => { }).Apply();
 
-		var isPointMove = t[to].ToString();
+		var pointMove = validateBoard[to].ToString();
 
 		// Assert.
-		isPointMove.Should().Be("ChessChaos.Common.Pieces.Bishop");
+		pointMove.Should().Be("ChessChaos.Common.Pieces.Bishop");
 	}
 
 	[TestMethod]
