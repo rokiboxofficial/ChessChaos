@@ -63,6 +63,37 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
+	public void WhenMovingPieces_AndMoveIsCorrect_WhenMoveShouldBeTrue()
+	{
+		// Arrange.
+		var from = new Point(0, 0);
+		var to = new Point(1, 0);
+		var pieceProvider = new PieceProvider();
+		var boardProvider = new ChessBoard(
+			new HashSet<Point>()
+			{
+				from, to
+			},
+			new List<(Point, Piece)>
+			{
+				(from, pieceProvider.GetInstance(PieceKind.King, SideColor.White))
+			}
+		);
+
+		// Act.
+		var isCorrectMove = false;
+		var whiteKingMove = boardProvider.FromPoints(from, to)
+			.ValidateMove(move =>
+			{
+				if (move.To == to && move.From == from)
+					isCorrectMove = true;
+			});
+
+		// Assert.
+		isCorrectMove.Should().BeTrue();
+	}
+
+	[TestMethod]
 	public void WhenMovingPieces_AndMovePieceOnNotExistPoint_ThrowException()
 	{
 		// Arrange.
