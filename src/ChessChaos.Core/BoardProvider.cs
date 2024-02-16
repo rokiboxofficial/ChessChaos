@@ -26,15 +26,11 @@ internal class BoardProvider
 		accessor?.Invoke(boardContext.ChessGameState);
 	}
 
-	internal IChessGameStateReader Apply(ICommand move)
+	internal void Apply(ICommand move)
 	{
-		var revertAction = ExecuteAction(move);
-
-		using var boardContext = new BoardContext(_chessGameStateReader, revertAction);
+		var revertAction = ExecuteActionAndGetRevertAction(move);
 
 		_revertActions.Push(revertAction);
-
-		return _chessGameStateReader;
 	}
 
 	private Action ExecuteActionAndGetRevertAction(ICommand move)
@@ -49,15 +45,6 @@ internal class BoardProvider
 
 			// BASE COPY OF FIELDS
 		};
-
-		return revertAction;
-	}
-
-	private Action ExecuteAction(ICommand move)
-	{
-		move.Execute(_chessGameStateWriter);
-
-		Action revertAction = () => { };
 
 		return revertAction;
 	}

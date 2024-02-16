@@ -1,8 +1,6 @@
-﻿using ChessChaos.Common;
-
-namespace ChessChaos.Core;
+﻿namespace ChessChaos.Core;
 
 public interface IValidatedBoard
 {
-	public IChessGameStateReader Apply();
+	public void Apply();
 }

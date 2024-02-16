@@ -21,7 +21,8 @@ public sealed class Bishop : Piece
 
 		// Check that has no pieces between from and to points
 		// TODO: ADD DIFF METHOD
-		if (_moveVectors.Contains(new Point((to.X - from.X) / Math.Abs(to.X - from.X), (to.Y - from.Y) / Math.Abs(to.Y - from.Y))))
+		if (_moveVectors.Contains(new Point(to.X - from.X / Math.Abs(to.X - from.X),
+				to.Y - from.Y / Math.Abs(to.Y - from.Y))))
 			return new SimpleMove(from, to, this, target);
 
 		// TODO: Add custom exceptions

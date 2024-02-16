@@ -9,183 +9,178 @@ namespace ChessChaos.CoreTests;
 public class FromPointsTests
 {
 	[TestMethod]
-	public void WhenMovingPieces_AndToPointIsNotExist_ThenThrowException()
+	public void WhenMovingPieces_AndPieceKingMoveIsNotCorrect_ThrowException()
 	{
 		// Arrange.
-		var whiteKing = new PieceProvider()
-			.GetInstance(PieceKind.King, SideColor.White);
-
-		var from = new Point(1, 1);
-		var to = new Point(21, 6);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from, whiteKing)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			from, to,
-			new Point(1,0),
-			new Point(0,1),
-			new Point(-1,0),
-			new Point(0,-1),
-			new Point(-1,-1),
-			new Point(-1,1),
-			new Point(1,-1)
-		};
-
-		var chessBoard = new ChessBoard(realPoints, piecesOnThePoints);
-
-		// Act.
-		Action act = () => chessBoard.FromPoints(from, to);
-
-		// Assert.
-		act.Should().Throw<Exception>();
-	}
-
-	[TestMethod]
-	public void WhenMovingPieces_AndPieceMoveIsNotCorrect_ThenThrowException()
-	{
-		// Arrange.
-		var whiteKing = new PieceProvider()
-			.GetInstance(PieceKind.King, SideColor.White);
-
-		var from = new Point(1, 1);
-		var to = new Point(3, 3);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from, whiteKing)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			from, to,
-			new Point(1,0),
-			new Point(0,1),
-			new Point(-1,0),
-			new Point(0,-1),
-			new Point(-1,-1),
-			new Point(-1,1),
-			new Point(1,-1)
-		};
-
-		var chessBoard = new ChessBoard(realPoints, piecesOnThePoints);
-
-		// Act.
-		Action act = () => chessBoard.FromPoints(from, to);
-
-		// Assert.
-		act.Should().Throw<Exception>();
-	}
-
-	[TestMethod]
-	public void WhenMovingPieces_AndBoardStateIsNotValid_ThrowException()
-	{
-		// Arrange.
-		var whiteKing = new PieceProvider()
-			.GetInstance(PieceKind.King, SideColor.White);
-		var blackBishop = new PieceProvider()
-			.GetInstance(PieceKind.Bishop, SideColor.Black);
-
-		var from = new Point(1, 1);
-		var to = new Point(2, 2);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from,whiteKing),
-			(to,blackBishop)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			to, from,
-			new Point(1,4),
-			new Point(3,2),
-			new Point(4,4),
-			new Point(1,-1)
-		};
-
-		// Act.
-		Action validateBoard = () => new ChessBoard(realPoints, piecesOnThePoints)
-			.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board =>
+		var pieceProvider = new PieceProvider();
+		var boardProvider = new ChessBoard(
+			new HashSet<Point>()
 			{
-				if (board[from] != board[to])
-					throw new Exception();
+				new Point(0,0),
+				new Point(5,3),
+			},
+			new List<(Point, Piece)>
+			{
+				(new Point(0,0), pieceProvider.GetInstance(PieceKind.King, SideColor.White))
+			}
+		);
+
+		// Act.
+		Action whiteKingMove = () =>
+			boardProvider.FromPoints(new Point(0, 0), new Point(5, 3))
+			.ValidateMove(move => { });
+
+		// Assert.
+		whiteKingMove.Should().Throw<Exception>();
+	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndPieceBishopMoveIsNotCorrect_ThrowException()
+	{
+		// Arrange.
+		var pieceProvider = new PieceProvider();
+		var boardProvider = new ChessBoard(
+			new HashSet<Point>()
+			{
+				new Point(0,0),
+				new Point(1,3),
+			},
+			new List<(Point, Piece)>
+			{
+				(new Point(0,0), pieceProvider.GetInstance(PieceKind.Bishop, SideColor.White))
+			}
+		);
+
+		// Act.
+		Action whiteKingMove = () =>
+			boardProvider.FromPoints(new Point(0, 0), new Point(1, 3))
+			.ValidateMove(move => { });
+
+		// Assert.
+		whiteKingMove.Should().Throw<Exception>();
+	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndMovePieceOnNotExistPoint_ThrowException()
+	{
+		// Arrange.
+		var pieceProvider = new PieceProvider();
+		var boardProvider = new ChessBoard(
+			new HashSet<Point>()
+			{
+				new Point(0,0),
+				new Point(4,4),
+			},
+			new List<(Point, Piece)>
+			{
+				(new Point(3,3), pieceProvider.GetInstance(PieceKind.Bishop, SideColor.White))
+			}
+		);
+
+		// Act.
+		Action whiteKingMove = () =>
+			boardProvider.FromPoints(new Point(3, 3), new Point(4, 4))
+			.ValidateMove(move => { throw new Exception(); });
+
+		// Assert.
+		whiteKingMove.Should().Throw<Exception>();
+	}
+
+
+	[TestMethod]
+	public void WhenMovingPieces_AndMovingPieceIsNotApply_WhenPointShouldBeComeBack()
+	{
+		var pieceProvider = new PieceProvider();
+		var chessBoard = new ChessBoard(
+			new HashSet<Point>
+			{
+			new Point(0, 0), new Point(1, 1),
+			},
+			new List<(Point, Piece)>
+			{
+			(new Point(0,0), pieceProvider.GetInstance(PieceKind.Bishop,SideColor.White))
+			}
+		);
+
+		chessBoard.FromPoints(new Point(0, 0), new Point(1, 1))
+			.ValidateMove(move => { })
+			.ValidateBoard(board => { });
+
+		var isSaveMove = false;
+		chessBoard.AccessBoard(state =>
+		{
+			var fromPointState = state[new Point(0, 0)];
+			var toPointState = state[new Point(1, 1)];
+
+			if (fromPointState != null
+			&& fromPointState == pieceProvider.GetInstance(PieceKind.Bishop, SideColor.White))
+			{
+				isSaveMove = true;
+			}
+		});
+
+		isSaveMove.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndMovingPieceIsApply_WhenMoveShouldBeSaved()
+	{
+		var pieceProvider = new PieceProvider();
+		var chessBoard = new ChessBoard(
+			new HashSet<Point>
+			{
+			new Point(0, 0), new Point(0, 1),
+			},
+			new List<(Point, Piece)>
+			{
+			(new Point(0,0), pieceProvider.GetInstance(PieceKind.King,SideColor.White))
+			}
+		);
+
+		chessBoard.FromPoints(new Point(0, 0), new Point(0, 1))
+			.ValidateMove(move => { })
+			.ValidateBoard(board => { })
+			.Apply();
+
+		var isSaveMove = false;
+		chessBoard.AccessBoard(state =>
+		{
+			var fromPointState = state[new Point(0, 0)];
+			var toPointState = state[new Point(0, 1)];
+
+			if (fromPointState == null
+			&& toPointState == pieceProvider.GetInstance(PieceKind.King, SideColor.White))
+			{
+				isSaveMove = true;
+			}
+		});
+
+		isSaveMove.Should().BeTrue();
+	}
+
+	[TestMethod]
+	public void WhenMovingPieces_AndBoardNotExistToPoint_ThenThrowException()
+	{
+		// Arrange
+		var provider = new PieceProvider();
+
+		var chessBoard = new ChessBoard(
+			new HashSet<Point>()
+			{
+				new Point(0,0),
+				new Point(4,1)
+			},
+			new List<(Point, Piece)>
+			{
+				(new Point(0,0), provider.GetInstance(PieceKind.King, SideColor.White))
 			});
 
-		// Assert.
-		validateBoard.Should().Throw<Exception>();
-	}
-
-	[TestMethod]
-	public void WhenMovingPieces_AndBoardStateIsApply_TheBoardIsApply()
-	{
-		// Arrange.
-		var whiteBishop = new PieceProvider()
-			.GetInstance(PieceKind.Bishop, SideColor.White);
-
-		var from = new Point(-1, 1);
-		var to = new Point(-2, 2);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from,whiteBishop)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			to, from,
-			new Point(1,4),
-			new Point(3,2),
-			new Point(4,4),
-			new Point(1,-1)
-		};
-
 		// Act.
-		var validateBoard = new ChessBoard(realPoints, piecesOnThePoints)
-			.FromPoints(from, to)
+		Action act = () => chessBoard.FromPoints(new Point(0, 0), new Point(1, 0))
 			.ValidateMove(move => { })
-			.ValidateBoard(board => { }).Apply();
+			.ValidateBoard(board => { });
 
 		// Assert.
-		validateBoard[to].Should().Be(whiteBishop);
-	}
-
-	[TestMethod]
-	public void WhenMovingPieces_AndBoardStateNotIsApply_TheBoardNotChanged()
-	{
-		// Arrange.
-		var whiteBishop = new PieceProvider()
-			.GetInstance(PieceKind.Bishop, SideColor.White);
-
-		var from = new Point(-1, 1);
-		var to = new Point(-2, 2);
-
-		var piecesOnThePoints = new List<(Point point, Piece piece)>()
-		{
-			(from,whiteBishop)
-		};
-
-		var realPoints = new HashSet<Point>()
-		{
-			to, from,
-			new Point(1,4),
-			new Point(3,2),
-			new Point(4,4),
-			new Point(1,-1)
-		};
-
-		// Act.
-		var validateBoard = new ChessBoard(realPoints, piecesOnThePoints)
-			.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board => { }).Apply();
-
-		// Assert.
-		validateBoard[from].Should().NotBe(whiteBishop);
+		act.Should().Throw<Exception>();
 	}
 }
