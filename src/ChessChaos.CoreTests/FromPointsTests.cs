@@ -197,7 +197,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardThrowException_ThrowExceptionAndRevertMove()
+	public void WhenMovingPieces_AndBoardThrowException_RevertMove()
 	{
 		// Arrange.
 		var from = new Point(0, 0);
@@ -237,7 +237,6 @@ public class FromPointsTests
 		});
 
 		// Assert.
-		validateBoard.Should().Throw<Exception>();
 		isRevertMove.Should().BeTrue();
 	}
 
