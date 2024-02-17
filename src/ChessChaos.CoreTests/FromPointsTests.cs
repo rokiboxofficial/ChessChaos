@@ -20,7 +20,7 @@ public class FromPointsTests
 			new Point(0, 0),new Point(5, 3)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteKing)
 		};
@@ -49,12 +49,12 @@ public class FromPointsTests
 			new Point(0,0),new Point(1,0)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0,0),whiteKing)
 		};
 
-		var boardProvider = new ChessBoard(boardPoints, piecesOnBoard);
+		var boardProvider = new ChessBoard(boardPoints, pieces);
 
 		// Act.
 		Action whiteKingMove = () =>
@@ -65,7 +65,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsCorrect_WhenMoveShouldBeTrue()
+	public void WhenMovingPieces_AndMoveIsCorrect_ThenMoveShouldBeTrue()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -76,12 +76,12 @@ public class FromPointsTests
 			new Point(0, 0),new Point(1, 0)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteKing)
 		};
 
-		var boardProvider = new ChessBoard(boardPoints, piecesOnBoard);
+		var boardProvider = new ChessBoard(boardPoints, pieces);
 
 		// Act.
 		var isCorrectMove = false;
@@ -99,7 +99,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMovingPieceIsNotApply_WhenPointShouldBeComeBack()
+	public void WhenMovingPieces_AndMovingPieceIsNotApply_ThenPointShouldBeComeBack()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -110,12 +110,12 @@ public class FromPointsTests
 			new Point(0, 0),new Point(1, 1)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteBishop)
 		};
 
-		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
+		var chessBoard = new ChessBoard(boardPoints, pieces);
 		chessBoard.FromPoints(new Point(0, 0), new Point(1, 1))
 			.ValidateMove(move => { }).ValidateBoard(board => { });
 
@@ -129,7 +129,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMovingPieceIsApply_WhenMoveShouldBeSaved()
+	public void WhenMovingPieces_AndMovingPieceIsApply_ThenMoveShouldBeSaved()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -140,12 +140,12 @@ public class FromPointsTests
 			new Point(0, 0),new Point(0, 1)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteKing)
 		};
 
-		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
+		var chessBoard = new ChessBoard(boardPoints, pieces);
 		chessBoard.FromPoints(new Point(0, 0), new Point(0, 1))
 			.ValidateMove(move => { }).ValidateBoard(board => { }).Apply();
 
@@ -170,12 +170,12 @@ public class FromPointsTests
 			new Point(0, 0),new Point(0, 1)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteKing)
 		};
 
-		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
+		var chessBoard = new ChessBoard(boardPoints, pieces);
 		Action validateBoard = () => chessBoard.FromPoints(new Point(0, 0), new Point(0, 1))
 			.ValidateMove(move => { }).ValidateBoard(board => { throw new Exception(); }).Apply();
 
@@ -200,12 +200,12 @@ public class FromPointsTests
 			new Point(0, 0),new Point(0, 1)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteKing)
 		};
 
-		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
+		var chessBoard = new ChessBoard(boardPoints, pieces);
 		Action validateBoard = () => chessBoard.FromPoints(new Point(0, 0), new Point(0, 1))
 			.ValidateMove(move => { throw new Exception(); }).ValidateBoard(board => { }).Apply();
 
@@ -225,12 +225,12 @@ public class FromPointsTests
 			new Point(0, 0)
 		};
 
-		var piecesOnBoard = new List<(Point, Piece)>()
+		var pieces = new List<(Point, Piece)>()
 		{
 			(new Point(0, 0),whiteKing)
 		};
 
-		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
+		var chessBoard = new ChessBoard(boardPoints, pieces);
 
 		// Act.
 		Action validateBoard = () => chessBoard.FromPoints(new Point(0, 0), new Point(0, 1))
