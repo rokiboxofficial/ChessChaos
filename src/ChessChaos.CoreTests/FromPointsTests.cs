@@ -16,16 +16,20 @@ public class FromPointsTests
 		var to = new Point(5, 3);
 
 		var pieceProvider = new PieceProvider();
-		var boardProvider = new ChessBoard(
-			new HashSet<Point>()
-			{
-				from, to
-			},
-			new List<(Point, Piece)>
-			{
-				(from, pieceProvider.GetInstance(PieceKind.King, SideColor.White))
-			}
-		);
+
+		var whiteKing = pieceProvider.GetInstance(PieceKind.King, SideColor.White);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from,to
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteKing)
+		};
+
+		var boardProvider = new ChessBoard(boardPoints, piecesOnBoard);
 
 		// Act.
 		Action whiteKingMove = () =>
@@ -43,17 +47,20 @@ public class FromPointsTests
 		var to = new Point(1, 0);
 
 		var pieceProvider = new PieceProvider();
+
 		var whiteKing = pieceProvider.GetInstance(PieceKind.Bishop, SideColor.White);
-		var boardProvider = new ChessBoard(
-			new HashSet<Point>()
-			{
-				from, to
-			},
-			new List<(Point, Piece)>
-			{
-				(from, whiteKing)
-			}
-		);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from,to
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteKing)
+		};
+
+		var boardProvider = new ChessBoard(boardPoints, piecesOnBoard);
 
 		// Act.
 		Action whiteKingMove = () =>
@@ -71,17 +78,20 @@ public class FromPointsTests
 		var to = new Point(1, 0);
 
 		var pieceProvider = new PieceProvider();
+
 		var whiteKing = pieceProvider.GetInstance(PieceKind.King, SideColor.White);
-		var boardProvider = new ChessBoard(
-			new HashSet<Point>()
-			{
-				from, to
-			},
-			new List<(Point, Piece)>
-			{
-				(from, whiteKing)
-			}
-		);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from,to
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteKing)
+		};
+
+		var boardProvider = new ChessBoard(boardPoints, piecesOnBoard);
 
 		// Act.
 		var isCorrectMove = false;
@@ -107,17 +117,20 @@ public class FromPointsTests
 		var to = new Point(1, 1);
 
 		var pieceProvider = new PieceProvider();
+
 		var whiteBishop = pieceProvider.GetInstance(PieceKind.Bishop, SideColor.White);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>
-			{
-				from, to
-			},
-			new List<(Point, Piece)>
-			{
-				(from, whiteBishop)
-			}
-		);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from,to
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteBishop)
+		};
+
+		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
 
 		chessBoard.FromPoints(from, to)
 			.ValidateMove(move => { })
@@ -147,17 +160,20 @@ public class FromPointsTests
 		var to = new Point(0, 1);
 
 		var pieceProvider = new PieceProvider();
+
 		var whiteKing = pieceProvider.GetInstance(PieceKind.King, SideColor.White);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>
-			{
-				from, to
-			},
-			new List<(Point, Piece)>
-			{
-				(from, whiteKing)
-			}
-		);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from,to
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteKing)
+		};
+
+		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
 
 		chessBoard.FromPoints(from, to)
 			.ValidateMove(move => { })
@@ -188,17 +204,20 @@ public class FromPointsTests
 		var to = new Point(0, 1);
 
 		var pieceProvider = new PieceProvider();
+
 		var whiteKing = pieceProvider.GetInstance(PieceKind.King, SideColor.White);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>
-			{
-				from, to
-			},
-			new List<(Point, Piece)>
-			{
-				(from, whiteKing)
-			}
-		);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from,to
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteKing)
+		};
+
+		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
 
 		Action validateBoard = () => chessBoard.FromPoints(from, to)
 			.ValidateMove(move => { })
@@ -231,15 +250,19 @@ public class FromPointsTests
 
 		var provider = new PieceProvider();
 
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>()
-			{
-				from
-			},
-			new List<(Point, Piece)>
-			{
-				(from, provider.GetInstance(PieceKind.King, SideColor.White))
-			});
+		var whiteKing = provider.GetInstance(PieceKind.King, SideColor.White);
+
+		var boardPoints = new HashSet<Point>()
+		{
+			from
+		};
+
+		var piecesOnBoard = new List<(Point, Piece)>()
+		{
+			(from,whiteKing)
+		};
+
+		var chessBoard = new ChessBoard(boardPoints, piecesOnBoard);
 
 		// Act.
 		Action validateBoard = () => chessBoard.FromPoints(from, to)

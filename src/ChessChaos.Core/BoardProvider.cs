@@ -27,17 +27,22 @@ internal class BoardProvider
 	internal void Apply(ICommand move)
 	{
 		var revertAction = ExecuteActionAndGetRevertAction(move);
+
 		_revertActions.Push(revertAction);
 	}
+
 
 	private Action ExecuteActionAndGetRevertAction(ICommand move)
 	{
 		move.Execute(_chessGameStateWriter);
+
+
 		// TODO: probably extract to service
 		// box to reverting action (fields)
 		Action revertAction = () =>
 		{
 			move.Revert(_chessGameStateWriter);
+
 			// BASE COPY OF FIELDS
 		};
 
