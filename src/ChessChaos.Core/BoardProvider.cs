@@ -20,6 +20,7 @@ internal class BoardProvider
 	internal void AccessBoard(ICommand move, Action<IChessGameStateReader> accessor)
 	{
 		var revertAction = ExecuteActionAndGetRevertAction(move);
+
 		using var boardContext = new BoardContext(_chessGameStateReader, revertAction);
 		accessor?.Invoke(boardContext.ChessGameState);
 	}
