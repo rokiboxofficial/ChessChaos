@@ -200,7 +200,7 @@ public class FromPointsTests
 			(from,whiteKing)
 		};
 		var board = new ChessBoard(points, pieces);
-		Action boardIsValid = () =>
+		Action moveIsValid = () =>
 		{
 			board.FromPoints(from, to)
 			.ValidateMove(move => { })
@@ -209,7 +209,7 @@ public class FromPointsTests
 		};
 
 		// Act.
-		boardIsValid.Should().Throw<Exception>();
+		moveIsValid.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
