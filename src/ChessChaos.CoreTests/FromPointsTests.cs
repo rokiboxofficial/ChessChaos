@@ -9,7 +9,7 @@ namespace ChessChaos.CoreTests;
 public class FromPointsTests
 {
 	[TestMethod]
-	public void WhenMovingPieces_AndKingMoveIsNotCorrect_ThrowException()
+	public void WhenMovingPieces_AndKingMoveIsDontCorrected_ThrowException()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -35,7 +35,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBishopMoveIsNotCorrect_ThrowException()
+	public void WhenMovingPieces_AndBishopMoveIsNotCorrected_ThrowException()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -61,7 +61,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsCorrect_ThenMoveShouldBeTrue()
+	public void WhenMovingPieces_AndMoveIsCorrected_ThenMoveShouldBeTrue()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -92,7 +92,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMovePieceIsNotApply_ThenPointShouldBeComeBack()
+	public void WhenMovingPieces_AndMoveIsDontApplied_ThenPointShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -123,7 +123,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMovePieceIsApply_ThenMoveShouldBeSaved()
+	public void WhenMovingPieces_AndMoveIsApplied_ThenMoveShouldBeSaved()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -155,7 +155,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardThrowException_RevertMove()
+	public void WhenMovingPieces_AndBoardThrowedException_MoveShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -182,7 +182,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveThrowException_RevertMove()
+	public void WhenMovingPieces_AndMoveThrowedException_MoveShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -209,7 +209,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardNotExistToPoint_ThenThrowException()
+	public void WhenMovingPieces_AndBoardDontExistToPoint_ThenThrowException()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
