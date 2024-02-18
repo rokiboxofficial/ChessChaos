@@ -123,7 +123,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsApplied_ThenMoveShouldBeSaved()
+	public void WhenMovingPieces_AndMoveIsApplied_ThenMoveShouldBeApplied()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -164,18 +164,20 @@ public class FromPointsTests
 		var to = new Point(0, 1);
 		var points = new HashSet<Point>()
 		{
-			from, to
+			from,
 		};
 		var pieces = new List<(Point, Piece)>()
 		{
 			(from,whiteKing)
 		};
 		var board = new ChessBoard(points, pieces);
-		Action boardIsValid = ()
-			=> board.FromPoints(from, to)
+		Action boardIsValid = () =>
+		{
+			board.FromPoints(from, to)
 			.ValidateMove(move => { })
-			.ValidateBoard(board => { throw new Exception(); })
+			.ValidateBoard(board => { })
 			.Apply();
+		};
 
 		// Act.
 		boardIsValid.Should().Throw<Exception>();
@@ -191,18 +193,20 @@ public class FromPointsTests
 		var to = new Point(0, 1);
 		var points = new HashSet<Point>()
 		{
-			from, to
+			from
 		};
 		var pieces = new List<(Point, Piece)>()
 		{
 			(from,whiteKing)
 		};
 		var board = new ChessBoard(points, pieces);
-		Action boardIsValid = ()
-			=> board.FromPoints(from, to)
-			.ValidateMove(move => { throw new Exception(); })
+		Action boardIsValid = () =>
+		{
+			board.FromPoints(from, to)
+			.ValidateMove(move => { })
 			.ValidateBoard(board => { })
 			.Apply();
+		};
 
 		// Act.
 		boardIsValid.Should().Throw<Exception>();
@@ -215,10 +219,10 @@ public class FromPointsTests
 		var pieceProvider = new PieceProvider();
 		var whiteKing = pieceProvider.GetInstance(PieceKind.King, SideColor.White);
 		var from = new Point(0, 0);
-		var to = new Point(1, 0);
+		var to = new Point(13, 7);
 		var points = new HashSet<Point>()
 		{
-			from
+			from,to
 		};
 		var pieces = new List<(Point, Piece)>()
 		{
