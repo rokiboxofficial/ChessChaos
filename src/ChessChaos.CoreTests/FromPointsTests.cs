@@ -9,7 +9,7 @@ namespace ChessChaos.CoreTests;
 public class FromPointsTests
 {
 	[TestMethod]
-	public void WhenMovingPieces_AndKingMoveIsDontCorrected_ThrowException()
+	public void WhenMovingPieces_AndKingMoveIsDoesNotCorrect_ThenThrowException()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -35,7 +35,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBishopMoveIsNotCorrected_ThrowException()
+	public void WhenMovingPieces_AndBishopMoveIsDoesNotCorrect_ThenThrowException()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -61,7 +61,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsCorrected_ThenMoveShouldBeTrue()
+	public void WhenMovingPieces_AndMoveIsCorrect_ThenMoveShouldBeTrue()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -78,7 +78,7 @@ public class FromPointsTests
 		};
 		var board = new ChessBoard(points, pieces);
 
-		// Act.
+		// Act, Assert.
 		var whiteKingMove = board.FromPoints(from, to)
 			.ValidateMove(move =>
 			{
@@ -92,7 +92,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveIsDontApplied_ThenPointShouldBeReverted()
+	public void WhenMovingPieces_AndMoveIsDoesNotApplied_ThenPointShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -112,7 +112,7 @@ public class FromPointsTests
 			.ValidateMove(move => { })
 			.ValidateBoard(board => { });
 
-		// Act.
+		// Act, Assert.
 		board.AccessBoard(state =>
 		{
 			var isCorrectMove = state[to] == whiteBishop
@@ -144,7 +144,7 @@ public class FromPointsTests
 			.ValidateBoard(board => { })
 			.Apply();
 
-		// Act.
+		// Act, Assert.
 		board.AccessBoard(state =>
 		{
 			var isCorrectMove = state[from] == null
@@ -155,7 +155,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardThrowedException_MoveShouldBeReverted()
+	public void WhenMovingPieces_AndBoardThrowedException_ThenMoveShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -178,13 +178,19 @@ public class FromPointsTests
 			.ValidateBoard(board => { })
 			.Apply();
 		};
+		board.AccessBoard(state =>
+		{
+			var isRevertMove = state[from] == whiteKing
+				&& state[to] == null;
+			isRevertMove.Should().BeTrue();
+		});
 
-		// Act.
+		// Act, Assert.
 		boardIsValid.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveThrowedException_MoveShouldBeReverted()
+	public void WhenMovingPieces_AndMoveThrowedException_ThenMoveShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -207,13 +213,19 @@ public class FromPointsTests
 			.ValidateBoard(board => { })
 			.Apply();
 		};
+		board.AccessBoard(state =>
+		{
+			var isRevertMove = state[from] == whiteKing
+				&& state[to] == null;
+			isRevertMove.Should().BeTrue();
+		});
 
-		// Act.
+		// Act, Assert.
 		moveIsValid.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardDontExistToPoint_ThenThrowException()
+	public void WhenMovingPieces_AndBoardDoesNotExistToPoint_ThenThrowException()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
