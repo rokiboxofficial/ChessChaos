@@ -108,11 +108,13 @@ public class FromPointsTests
 			(from,whiteBishop)
 		};
 		var board = new ChessBoard(points, pieces);
+
+		// Act.
 		board.FromPoints(from, to)
 			.ValidateMove(move => { })
 			.ValidateBoard(board => { });
 
-		// Act, Assert.
+		//Assert.
 		board.AccessBoard(state =>
 		{
 			var isCorrectMove = state[to] == whiteBishop
@@ -139,12 +141,14 @@ public class FromPointsTests
 			(from,whiteKing)
 		};
 		var board = new ChessBoard(points, pieces);
+
+		// Act.
 		board.FromPoints(from, to)
 			.ValidateMove(move => { })
 			.ValidateBoard(board => { })
 			.Apply();
 
-		// Act, Assert.
+		// Assert.
 		board.AccessBoard(state =>
 		{
 			var isCorrectMove = state[from] == null
@@ -155,7 +159,7 @@ public class FromPointsTests
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndBoardThrowedException_ThenMoveShouldBeReverted()
+	public void WhenMovingPieces_AndBoardThrowedException_ThrowExceptionAndMoveShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -171,6 +175,8 @@ public class FromPointsTests
 			(from,whiteKing)
 		};
 		var board = new ChessBoard(points, pieces);
+
+		// Act.
 		Action boardIsValid = () =>
 		{
 			board.FromPoints(from, to)
@@ -178,6 +184,8 @@ public class FromPointsTests
 			.ValidateBoard(board => { })
 			.Apply();
 		};
+
+		// Assert.
 		board.AccessBoard(state =>
 		{
 			var isRevertMove = state[from] == whiteKing
@@ -185,12 +193,11 @@ public class FromPointsTests
 			isRevertMove.Should().BeTrue();
 		});
 
-		// Act, Assert.
 		boardIsValid.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
-	public void WhenMovingPieces_AndMoveThrowedException_ThenMoveShouldBeReverted()
+	public void WhenMovingPieces_AndMoveThrowedException_ThrowExceptionAndMoveShouldBeReverted()
 	{
 		// Arrange.
 		var pieceProvider = new PieceProvider();
@@ -206,6 +213,8 @@ public class FromPointsTests
 			(from,whiteKing)
 		};
 		var board = new ChessBoard(points, pieces);
+
+		// Act.
 		Action moveIsValid = () =>
 		{
 			board.FromPoints(from, to)
@@ -213,6 +222,8 @@ public class FromPointsTests
 			.ValidateBoard(board => { })
 			.Apply();
 		};
+
+		// Assert.
 		board.AccessBoard(state =>
 		{
 			var isRevertMove = state[from] == whiteKing
@@ -220,7 +231,6 @@ public class FromPointsTests
 			isRevertMove.Should().BeTrue();
 		});
 
-		// Act, Assert.
 		moveIsValid.Should().Throw<Exception>();
 	}
 
