@@ -13,5 +13,14 @@ public class MoveProvider
 
 	// TODO: throw execption if not null
 	public IChessMove GetMove(Point from, Point to)
-		=> _chessGameStateReader[from]?.GetMove(_chessGameStateReader, from, to);
+	{
+		var move = _chessGameStateReader[from]?.GetMove(_chessGameStateReader, from, to);
+
+		if (move is null)
+		{
+			throw new Exception();
+		}
+
+		return move;
+	}
 }
