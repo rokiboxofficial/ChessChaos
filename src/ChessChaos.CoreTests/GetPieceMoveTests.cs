@@ -21,8 +21,7 @@ public class GetPieceMoveTests
 		// Act.
 		var gameStateMock = new Mock<IChessGameStateReader>();
 
-		gameStateMock
-			.Setup(point => point[new Point(6, 6)])
+		gameStateMock.Setup(point => point[new Point(6, 6)])
 			.Returns(whiteKing);
 
 		var moveIsNotCorrect = () => new MoveProvider(gameStateMock.Object)
@@ -42,8 +41,7 @@ public class GetPieceMoveTests
 		// Act.
 		var gameStateMock = new Mock<IChessGameStateReader>();
 
-		gameStateMock
-			.Setup(point => point[from])
+		gameStateMock.Setup(point => point[from])
 			.Returns(null as Piece);
 
 		var moveIsNotCorrect = () => new MoveProvider(gameStateMock.Object)
@@ -63,16 +61,15 @@ public class GetPieceMoveTests
 		var whiteKing = provider.GetInstance(PieceKind.King, SideColor.White);
 
 		// Act.
-		var IChessGameStateReaderMock = new Mock<IChessGameStateReader>();
+		var gameStateMock = new Mock<IChessGameStateReader>();
 
-		IChessGameStateReaderMock
-			.Setup(p => p[from])
+		gameStateMock.Setup(p => p[from])
 			.Returns(whiteKing);
 
-		var stab = new MoveProvider(IChessGameStateReaderMock.Object)
+		var moveIsCorrect = new MoveProvider(gameStateMock.Object)
 			.GetMove(from, to) != null;
 
 		// Assert.
-		stab.Should().BeTrue();
+		moveIsCorrect.Should().BeTrue();
 	}
 }
