@@ -13,8 +13,6 @@ public class GetPieceMoveTests
 	public void WhenMovingPiece_AndPointNotExistOnTheBoard_ThrowException()
 	{
 		// Arrange.
-		var from = new Point(0, 0);
-		var to = new Point(1, 0);
 		var provider = new PieceProvider();
 		var whiteKing = provider.GetInstance(PieceKind.King, SideColor.White);
 
@@ -25,7 +23,7 @@ public class GetPieceMoveTests
 			.Returns(whiteKing);
 
 		var moveIsNotCorrect = () => new MoveProvider(gameStateMock.Object)
-			.GetMove(from, to);
+			.GetMove(new Point(0, 0), new Point(1, 0));
 
 		// Assert.
 		moveIsNotCorrect.Should().Throw<Exception>();
