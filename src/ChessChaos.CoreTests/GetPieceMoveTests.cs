@@ -2,6 +2,7 @@
 using ChessChaos.Common.Pieces;
 using ChessChaos.Core;
 using FluentAssertions;
+using Moq;
 
 namespace ChessChaos.CoreTests;
 
@@ -9,92 +10,69 @@ namespace ChessChaos.CoreTests;
 public class GetPieceMoveTests
 {
 	[TestMethod]
-	public void WhenMovingPiece_AndBoardNotExistPoint_ThrowException()
+	public void WhenMovingPiece_AndPointNotExistOnTheBoard_ThrowException()
 	{
 		// Arrange.
+		var from = new Point(0, 0);
+		var to = new Point(1, 0);
 		var provider = new PieceProvider();
 		var whiteKing = provider.GetInstance(PieceKind.King, SideColor.White);
-		var from = new Point(0, 0);
-		var to = new Point(1, 0);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>() { new Point(5, 6), to },
-			new List<(Point, Piece)> { (from, whiteKing) });
 
 		// Act.
-		Action notCorrectMove = () => chessBoard.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board =>
-			{
-				board[from]?.GetMove(board, from, to);
-			});
+		var gameStateMock = new Mock<IChessGameStateReader>();
 
-		//Assert.
-		notCorrectMove.Should().Throw<Exception>();
-	}
+		gameStateMock
+			.Setup(point => point[new Point(6, 6)])
+			.Returns(whiteKing);
 
-	[TestMethod]
-	public void WhenMovingPiece_AndPieceIsNull_ThrowException()
-	{
-		// Arrange.
-		var from = new Point(0, 0);
-		var to = new Point(1, 0);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>() { from, to },
-			new List<(Point, Piece)> { (from, null) });
-
-		// Act.
-		Action notCorrectMove = () => chessBoard.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board =>
-			{
-				board[from]?.GetMove(board, from, to);
-			});
+		var moveIsNotCorrect = () => new MoveProvider(gameStateMock.Object)
+			.GetMove(from, to);
 
 		// Assert.
-		notCorrectMove.Should().Throw<Exception>();
+		moveIsNotCorrect.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
-	public void WhenMovingPiece_AndBoardNotExistPointAndPieceIsNull_ThrowException()
+	public void WhenGetMoving_AndPieceIsNotExist_ThrowException()
 	{
 		// Arrange.
 		var from = new Point(0, 0);
 		var to = new Point(1, 0);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>() { from, to },
-			new List<(Point, Piece)> { (new Point(6, 11), null) });
 
 		// Act.
-		Action notCorrectMove = () => chessBoard.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board =>
-			{
-				board[from]?.GetMove(board, from, to);
-			});
+		var gameStateMock = new Mock<IChessGameStateReader>();
+
+		gameStateMock
+			.Setup(point => point[from])
+			.Returns(null as Piece);
+
+		var moveIsNotCorrect = () => new MoveProvider(gameStateMock.Object)
+			.GetMove(from, to);
 
 		// Assert.
-		notCorrectMove.Should().Throw<Exception>();
+		moveIsNotCorrect.Should().Throw<Exception>();
 	}
 
 	[TestMethod]
-	public void WhenMovingPiece_AndBoardExistPieceAndPieceNotNull_ThenMoveIsTrue()
+	public void WhenGetMovingPiece_AndPointExistAndPieceIsExist_MoveShouldBeTrue()
 	{
 		// Arrange.
+		var from = new Point(0, 0);
+		var to = new Point(1, 0);
 		var provider = new PieceProvider();
 		var whiteKing = provider.GetInstance(PieceKind.King, SideColor.White);
-		var from = new Point(0, 0);
-		var to = new Point(1, 0);
-		var chessBoard = new ChessBoard(
-			new HashSet<Point>() { from, to },
-			new List<(Point, Piece)>() { (from, whiteKing) });
 
-		// Act, Assert.
-		var correctMove = chessBoard.FromPoints(from, to)
-			.ValidateMove(move => { })
-			.ValidateBoard(board =>
-			{
-				var isValidMove = board[from]?.GetMove(board, from, to) == null;
-				isValidMove.Should().BeTrue();
-			});
+		// Act.
+		var IChessGameStateReaderMock = new Mock<IChessGameStateReader>();
+
+		IChessGameStateReaderMock
+			.Setup(p => p[from])
+			.Returns(whiteKing);
+
+		var stab = new MoveProvider(IChessGameStateReaderMock.Object)
+			.GetMove(from, to) != null;
+
+		// Assert.
+		stab.Should().BeTrue();
 	}
 }
